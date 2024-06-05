@@ -1,0 +1,113 @@
+<div
+  class="container-fluid d-flex justify-content-center align-items-center vh-100 bg-mobile"
+  style="background-color: #171a4a"
+>
+  <div
+    class="card p-4 shadow custom-transparent-bg"
+    style="width: 400px; background-color: #eed1b5"
+  >
+    <h2 class="text-center mb-4" style="color: #191967">Faça seu registro</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="save()">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          formControlName="fullname"
+          class="form-control"
+          id="floatingInputFullName"
+          placeholder="Nome Completo"
+          style="background-color: rgba(255, 255, 255, 0.611)"
+        />
+        <label for="floatingInputFullName" style="color: #191967"
+          >Nome Completo</label
+        >
+        <div
+          *ngIf="
+            registerForm.get('fullname')?.invalid &&
+            registerForm.get('fullname')?.touched
+          "
+          class="text-danger"
+        >
+          Nome completo é obrigatório
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          id="floatingInputEmail"
+          placeholder="Email"
+          style="background-color: rgba(255, 255, 255, 0.611)"
+        />
+        <label for="floatingInputEmail" style="color: #191967">Email</label>
+        <div
+          *ngIf="
+            registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.touched
+          "
+          class="text-danger"
+        >
+          Email é obrigatório
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          id="floatingInputPassword"
+          placeholder="Senha"
+          style="background-color: rgba(255, 255, 255, 0.611)"
+        />
+        <label for="floatingInputPassword" style="color: #191967">Senha</label>
+        <div
+          *ngIf="
+            registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.touched
+          "
+          class="text-danger"
+        >
+          Senha é obrigatória
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          class="form-control"
+          id="floatingInputConfirmPassword"
+          placeholder="Confirme sua Senha"
+          style="background-color: rgba(255, 255, 255, 0.611)"
+        />
+        <label for="floatingInputConfirmPassword" style="color: #191967"
+          >Confirme sua Senha</label
+        >
+        <div
+          *ngIf="
+            registerForm.get('confirmPassword')?.invalid &&
+            registerForm.get('confirmPassword')?.touched
+          "
+          class="text-danger"
+        >
+          Confirmação de senha é obrigatória
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          [disabled]="registerForm.invalid"
+          style="background-color: #191967; border-color: #191967"
+        >
+          Cadastrar
+        </button>
+      </div>
+    </form>
+    <div class="text-center mt-3">
+      <p style="margin: 0; color: #191967">Possui cadastro?</p>
+      <a routerLink="/login" class="btn btn-link" style="color: #191967"
+        >Faça o login</a
+      >
+    </div>
+  </div>
+</div>

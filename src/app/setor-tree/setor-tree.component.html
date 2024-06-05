@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div class="container py-4 mt-5" style="color: #fff">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card" style="background-color: #171a4a; border: none;">
+        <div class="card-header text-center" style="background-color: #eed1b5; color: #171a4a;">
+          <h3>Árvore de Setores</h3>
+        </div>
+        <div class="card-body" style="background-color: #171a4a; color: #eed1b5;">
+          <ul class="list-group">
+            <ng-template #recursiveList let-subSetores>
+              <li *ngFor="let setor of subSetores" class="list-group-item list-group-item-action" [ngClass]="{'list-group-item-dark': true}">
+                {{ setor.nomeSetor }}
+                <ul *ngIf="setor.subSetores && setor.subSetores.length" class="list-group ml-3">
+                  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: setor.subSetores }"></ng-container>
+                </ul>
+              </li>
+            </ng-template>
+            <ng-container *ngFor="let setor of setores">
+              <li class="list-group-item list-group-item-action" [ngClass]="{'list-group-item-dark': true}">
+                {{ setor.nomeSetor }}
+                <ul *ngIf="setor.subSetores && setor.subSetores.length" class="list-group ml-3">
+                  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: setor.subSetores }"></ng-container>
+                </ul>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

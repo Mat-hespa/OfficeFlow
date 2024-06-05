@@ -1,0 +1,319 @@
+<div class="container mt-5" style="color: #171a4a">
+  <app-header></app-header>
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-5">
+      <div class="card mt-2" style="background-color: #eed1b5">
+        <div class="card-body">
+          <form
+            class="row g-3"
+            [formGroup]="companyForm"
+            (ngSubmit)="registerCompany()"
+          >
+            <!-- DADOS BASICOS -->
+            <h5 class="mb-0 mt-4" style="font-weight: bold">DADOS BASICOS</h5>
+            <div class="col-md-4">
+              <label for="razaoSocial" class="form-label" style="color: #171a4a"
+                >Razão Social</label
+              >
+              <input
+                type="text"
+                formControlName="razaoSocial"
+                class="form-control border border-2"
+                id="razaoSocial"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+              <div
+                *ngIf="
+                  companyForm.get('razaoSocial')?.invalid &&
+                  companyForm.get('razaoSocial')?.touched
+                "
+                class="text-danger"
+              >
+                Razão Social é obrigatória
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label
+                for="nomeFantasia"
+                class="form-label"
+                style="color: #171a4a"
+                >Nome Fantasia</label
+              >
+              <input
+                type="text"
+                formControlName="nomeFantasia"
+                class="form-control border border-2"
+                id="nomeFantasia"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+              <div
+                *ngIf="
+                  companyForm.get('nomeFantasia')?.invalid &&
+                  companyForm.get('nomeFantasia')?.touched
+                "
+                class="text-danger"
+              >
+                Nome Fantasia é obrigatório
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="cnpj" class="form-label" style="color: #171a4a"
+                >CNPJ</label
+              >
+              <input
+                type="text"
+                formControlName="cnpj"
+                class="form-control border border-2"
+                id="cnpj"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+              <div
+                *ngIf="
+                  companyForm.get('cnpj')?.invalid &&
+                  companyForm.get('cnpj')?.touched
+                "
+                class="text-danger"
+              >
+                CNPJ possui estrutura inválida
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label
+                for="inscricaoEstadual"
+                class="form-label"
+                style="color: #171a4a"
+                >Inscrição Estadual</label
+              >
+              <input
+                type="text"
+                formControlName="inscricaoEstadual"
+                class="form-control border border-2"
+                id="inscricaoEstadual"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+            </div>
+            <div class="col-md-4">
+              <label
+                for="inscricaoMunicipal"
+                class="form-label"
+                style="color: #171a4a"
+                >Inscrição Municipal</label
+              >
+              <input
+                type="text"
+                formControlName="inscricaoMunicipal"
+                class="form-control border border-2"
+                id="inscricaoMunicipal"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+            </div>
+            <div class="col-4">
+              <label for="observacoes" class="form-label" style="color: #171a4a"
+                >Observações</label
+              >
+              <input
+                type="text"
+                formControlName="observacoes"
+                class="form-control border border-2"
+                id="observacoes"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+            </div>
+
+            <h5 class="mb-0 mt-5" style="font-weight: bold">TELEFONES</h5>
+            <!-- Telefones -->
+            <div class="col-md-4">
+              <label
+                for="tipoTelefone"
+                class="form-label"
+                style="color: #171a4a"
+                >Tipo Telefone</label
+              >
+              <select
+                formControlName="tipoTelefone"
+                class="form-select border border-2"
+                id="tipoTelefone"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              >
+                <option value="telefoneFixo">Telefone Fixo</option>
+                <option value="telefoneCelular">Celular</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label
+                for="numeroTelefone"
+                class="form-label"
+                style="color: #171a4a"
+                >Número</label
+              >
+              <input
+                type="text"
+                formControlName="numeroTelefone"
+                class="form-control border border-2"
+                id="numeroTelefone"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+            </div>
+            <div class="col-4">
+              <label
+                for="descricaoTelefone"
+                class="form-label"
+                style="color: #171a4a"
+                >Descrição</label
+              >
+              <select
+                formControlName="descricaoTelefone"
+                class="form-select border border-2"
+                id="descricaoTelefone"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              >
+                <option value="telefonePessoal">Telefone pessoal</option>
+                <option value="telefoneCorporativo">Telefone corporativo</option>
+              </select>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6">
+              <label for="email" class="form-label" style="color: #171a4a"
+                >Email</label
+              >
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control border border-2"
+                id="email"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+              <div
+                *ngIf="
+                  companyForm.get('email')?.invalid &&
+                  companyForm.get('email')?.touched
+                "
+                class="text-danger"
+              >
+                Email é obrigatório
+              </div>
+            </div>
+            <div class="col-6">
+              <label
+                for="descricaoEmail"
+                class="form-label"
+                style="color: #171a4a"
+                >Descrição</label
+              >
+              <select
+                formControlName="descricaoEmail"
+                class="form-control border border-2"
+                id="descricaoEmail"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              >
+                <option value="emailPessoal">Email pessoal</option>
+                <option value="emailCorporativo">Email corporativo</option>
+              </select>
+            </div>
+
+            <h5 class="mb-0 mt-5" style="font-weight: bold">ENDEREÇO</h5>
+            <!-- ENDEREÇO -->
+            <div class="col-md-2">
+              <label for="cep" class="form-label" style="color: #171a4a"
+                >CEP</label
+              >
+              <input
+                type="text"
+                formControlName="cep"
+                class="form-control border border-2"
+                id="cep"
+                (blur)="buscarEnderecoPorCep()"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+              <div
+                *ngIf="
+                  companyForm.get('cep')?.invalid &&
+                  companyForm.get('cep')?.touched
+                "
+                class="text-danger"
+              >
+                Estrutura do CEP inválida
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="cidade" class="form-label" style="color: #171a4a"
+                >Cidade</label
+              >
+              <input
+                type="text"
+                formControlName="cidade"
+                class="form-control border border-2"
+                id="cidade"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="estado" class="form-label" style="color: #171a4a"
+                >Estado</label
+              >
+              <input
+                type="text"
+                formControlName="estado"
+                class="form-control border border-2"
+                id="estado"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+            </div>
+            <div class="col-6">
+              <label for="bairro" class="form-label" style="color: #171a4a"
+                >Bairro</label
+              >
+              <input
+                type="text"
+                formControlName="bairro"
+                class="form-control border border-2"
+                id="bairro"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+            </div>
+            <div class="col-4">
+              <label for="logradouro" class="form-label" style="color: #171a4a"
+                >Logradouro</label
+              >
+              <input
+                type="text"
+                formControlName="logradouro"
+                class="form-control border border-2"
+                id="logradouro"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              />
+            </div>
+            <div class="col-2">
+              <label for="numero" class="form-label" style="color: #171a4a"
+                >Número</label
+              >
+              <input
+                type="text"
+                formControlName="numeroCasa"
+                class="form-control border border-2"
+                id="numeroCasa"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                numericOnly
+              />
+            </div>
+            <div class="col-12 mt-4">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="background-color: #171a4a; border: 0; color: #ffffff"
+              >
+                Cadastrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<app-header></app-header>
+
+<div class="container mt-4" style="padding-top: 50px;">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 mb-4" *ngIf="authService.isAdmin()"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/empresa.jpg" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Empresa</h5>
+          <p class="card-text">Faça o cadastro de uma empresa clicando no botão abaixo</p>
+          <button routerLink="/cadastroEmpresa" class="btn btn-primary" style="background-color: #171a4a; border: 0;" [disabled]="empresaCadastrada" >Avançar</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4" *ngIf="authService.isAdmin()"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/setor.jpg" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Setor</h5>
+          <p class="card-text">Faça o cadastro de um setor clicando no botão abaixo</p>
+          <a routerLink="/cadastroSetor" class="btn btn-primary" style="background-color: #171a4a; border: 0;">Avançar</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4" *ngIf="authService.isAdmin()"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/pessoa.jpg" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Pessoa</h5>
+          <p class="card-text">Faça o cadastro de uma pessoa física clicando no botão abaixo</p>
+          <a routerLink="/cadastroPessoa" class="btn btn-primary" style="background-color: #171a4a; border: 0;">Avançar</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/suporte-ti.jpeg" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Chamado pro TI</h5>
+          <p class="card-text">Faça o cadastro de um chamado clicando no botão abaixo</p>
+          <button routerLink="/cadastroTI" class="btn btn-primary" style="background-color: #171a4a; border: 0;">Avançar</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/recados-ti.webp" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Recado</h5>
+          <p class="card-text">Faça o cadastro de um recado clicando no botão abaixo</p>
+          <button routerLink="/cadastroRecado" class="btn btn-primary" style="background-color: #171a4a; border: 0;" >Avançar</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4"> 
+      <div class="card" style="background-color: #eed1b5;"> 
+        <div class="image-wrapper">
+          <img src="../../assets/ documento-ti.jpg" class="card-img-top img-fluid" alt="Project 1">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Documento</h5>
+          <p class="card-text">Faça o cadastro de uma empresa clicando no botão abaixo</p>
+          <button routerLink="/cadastroDocumento" class="btn btn-primary" style="background-color: #171a4a; border: 0;" >Avançar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

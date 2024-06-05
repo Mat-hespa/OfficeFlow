@@ -1,0 +1,87 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100" style="background-color: #171a4a;">
+  <div style="position: relative; width: 100%" class="d-none d-md-block">
+    <img
+      src="../../assets/OFtudojunto.PNG"
+      alt="Logo"
+      class="img-fluid position-absolute top-100 start-50 translate-middle min-logo"
+      style="
+        max-width: 80%;
+        width: 80vw;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        top: 150%;
+      "
+    />
+  </div>
+  <div
+    class="container-fluid d-flex justify-content-center align-items-center vh-100 bg-mobile"
+    style="background-color: #171a4a"
+  >
+    <div
+      class="card p-4 shadow custom-transparent-bg"
+      style="width: 400px; background-color: #eed1b5"
+    >
+      <h2 class="text-center mb-4" style="color: #191967">Officeflow</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            formControlName="email"
+            class="form-control"
+            id="floatingInputEmail"
+            placeholder="Email"
+            style="background-color: rgba(255, 255, 255, 0.611)"
+          />
+          <label for="floatingInputEmail" style="color: #191967">Email</label>
+          <div
+            *ngIf="
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+            "
+            class="text-danger"
+          >
+            Email é obrigatório
+          </div>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="floatingInputPassword"
+            placeholder="Password"
+            style="background-color: rgba(255, 255, 255, 0.611)"
+          />
+          <label for="floatingInputPassword" style="color: #191967"
+            >Password</label
+          >
+          <div
+            *ngIf="
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+            "
+            class="text-danger"
+          >
+            Senha é obrigatória
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            [disabled]="loginForm.invalid"
+            style="background-color: #191967; border-color: #191967"
+          >
+            Entrar
+          </button>
+        </div>
+      </form>
+      <p *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+      <div class="text-center mt-3">
+        <p style="margin: 0; color: #191967">Não possui uma conta?</p>
+        <a routerLink="/register" class="btn btn-link" style="color: #191967"
+          >Cadastre-se</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

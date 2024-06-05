@@ -1,0 +1,237 @@
+<div class="container" style="color: #fff">
+  <app-header></app-header>
+  <div
+    class="row justify-content-center align-items-center vh-100 bg-mobile"
+    style="background-color: #171a4a"
+  >
+    <div class="col-md-12 mt-3">
+      <div class="card mt-5" style="background-color: #eed1b5">
+        <div class="card-body">
+          <form
+            class="row g-3"
+            [formGroup]="setorForm"
+            (ngSubmit)="registerSetor()"
+          >
+            <!-- DADOS DO SETOR -->
+            <h5 class="mb-0 mt-4" style="font-weight: bold">DADOS DO SETOR</h5>
+            <div class="col-md-6">
+              <label for="empresa" class="form-label">Empresa</label>
+              
+              <!-- <select
+                formControlName="empresa"
+                class="form-select"
+                id="empresa"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              >
+                <option
+                  *ngFor="let empresa of empresas"
+                  [value]="empresa.nomeFantasia"
+                >
+                  {{ empresa.nomeFantasia }}
+                </option>
+              </select> -->
+
+              <input style="background-color: rgba(255, 255, 255, 0.611);" type="text" class="form-control" id="empresa" *ngFor="let empresa of empresas"
+              [value]="empresa.nomeFantasia" readonly>
+
+              <div
+                *ngIf="
+                  setorForm.get('empresa')?.invalid &&
+                  setorForm.get('empresa')?.touched
+                "
+                class="text-danger"
+              >
+                Empresa é obrigatória
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="nomeSetor" class="form-label">Nome do Setor</label>
+              <input
+                type="text"
+                formControlName="nomeSetor"
+                class="form-control border border-2"
+                id="nomeSetor"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              />
+              <div
+                *ngIf="
+                  setorForm.get('nomeSetor')?.invalid &&
+                  setorForm.get('nomeSetor')?.touched
+                "
+                class="text-danger"
+              >
+                Nome do Setor é obrigatório
+              </div>
+            </div>
+            <!-- <div class="col-4">
+              <label for="descricao" class="form-label">Descrição</label>
+              <input
+                type="text"
+                formControlName="descricao"
+                class="form-control border border-2"
+                id="descricao"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              />
+              <div
+                *ngIf="
+                  setorForm.get('descricao')?.invalid &&
+                  setorForm.get('descricao')?.touched
+                "
+                class="text-danger"
+              >
+                Descrição é obrigatória
+              </div>
+            </div> -->
+
+            <div class="col-4">
+              <label for="isSubSetor" class="form-label">É subsetor?</label>
+              <select
+                formControlName="isSubSetor"
+                class="form-select border border-2"
+                id="isSubSetor"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                (ngModelChange)="loadSetores()"
+              >
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+              </select>
+            </div>
+
+            <div class="col-md-4" *ngIf="setorForm.get('isSubSetor')?.value === 'sim'">
+              <label for="setorPai" class="form-label">Setor Pai</label>
+              <select
+                formControlName="setorPai"
+                class="form-select border border-2"
+                id="setorPai"
+                style="background-color: rgba(255, 255, 255, 0.611);"
+              >
+                <option *ngFor="let setor of setores" [value]="setor.nomeSetor">
+                  {{ setor.nomeSetor }}
+                </option>
+              </select>
+            </div>
+
+            <!-- CONTATO SETOR -->
+            <h5 class="mb-0 mt-5" style="font-weight: bold">CONTATO SETOR</h5>
+            <div class="col-md-4">
+              <label for="responsavel" class="form-label">Responsável</label>
+              <input
+                type="text"
+                formControlName="responsavel"
+                class="form-control border border-2"
+                id="responsavel"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="contato" class="form-label">Contato</label>
+              <input
+                type="text"
+                formControlName="contato"
+                class="form-control border border-2"
+                id="contato"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              />
+            </div>
+            <div class="col-4">
+              <label for="status" class="form-label">Status Setor</label>
+              <input
+                type="text"
+                formControlName="status"
+                class="form-control border border-2"
+                id="status"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+              />
+            </div>
+
+            <!-- TELEFONE RESPONSÁVEL -->
+            <h5 class="mb-0 mt-5" style="font-weight: bold">
+              TELEFONE RESPONSÁVEL
+            </h5>
+            <div class="col-4">
+              <label for="tipoTelefoneResponsavel" class="form-label">Tipo</label>
+              <select
+                formControlName="tipoTelefoneResponsavel"
+                class="form-select border border-2"
+                id="tipoTelefoneResponsavel"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              >
+                <option value="telefoneFixo">Telefone Fixo</option>
+                <option value="telefoneCelular">Celular</option>
+              </select>
+            </div>
+
+            <div class="col-4">
+              <label for="numeroTelefoneResponsavel" class="form-label"
+                >Número Telefone</label
+              >
+              <input
+                type="text"
+                formControlName="numeroTelefoneResponsavel"
+                class="form-control border border-2"
+                id="numeroTelefoneResponsavel"
+                style="
+                  background-color: rgba(255, 255, 255, 0.611);
+                  color: #171a4a;
+                "
+                numericOnly
+              />
+              <div
+                *ngIf="
+                  setorForm.get('numeroTelefoneResponsavel')?.invalid &&
+                  setorForm.get('numeroTelefoneResponsavel')?.touched
+                "
+                class="text-danger"
+              >
+                Estrutura do número inválida
+              </div>
+            </div>
+
+            <div class="col-4">
+              <label for="descricaoTelefoneResponsavel" class="form-label"
+                >Descrição</label
+              >
+              <select
+                formControlName="descricaoTelefoneResponsavel"
+                class="form-select border border-2"
+                id="descricaoTelefoneResponsavel"
+                style="background-color: rgba(255, 255, 255, 0.611)"
+              >
+                <option value="telefonePessoal">Telefone pessoal</option>
+                <option value="telefoneCorporativo">Telefone corporativo</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-4">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="background-color: #171a4a; border: 0"
+              >
+                Cadastrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

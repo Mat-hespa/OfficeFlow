@@ -1,0 +1,42 @@
+.list-group-item-dark {
+    background-color: #eed1b5;
+    border-color: #eed1b5;
+    color: #171a4a;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .list-group-item-dark:hover {
+    background-color: #000020;
+    color: #eed1b5;
+  }
+
+  .list-group .ml-3 {
+    margin-left: 20px !important;
+  }
+
+  ul.list-group ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  ul.list-group ul li:before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    width: 20px;
+    height: 2px;
+    background-color: #eed1b5;
+  }
+
+  ul.list-group ul li:after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 2px;
+    height: 20px;
+    background-color: #eed1b5;
+  }

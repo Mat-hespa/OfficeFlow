@@ -1,0 +1,89 @@
+<app-header></app-header>
+<div class="container mt-4" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-4">
+      <div
+        class="card mt-5 h-auto"
+        style="background-color: #eed1b5; border-radius: 10px"
+      >
+        <div class="card-body">
+          <div class="mb-3">
+            <div class="btn-group">
+              <button
+                style="background-color: #171a4a"
+                type="button"
+                class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{ selectedOption === 'SETOR' ? 'Setor' : 'Pessoa' }}
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="selectedOption='SETOR'; loadSetores()">Setor</a></li>
+                <li><a class="dropdown-item" (click)="selectedOption='PESSOA'; loadPessoas()">Pessoa</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table
+              id="example"
+              class="table table-striped table-hover mt-3"
+              style="background-color: #ffffff"
+            >
+              <thead class="table-dark">
+                <tr>
+                  <th
+                    *ngFor="let header of headers[selectedOption]"
+                    style="background-color: #000020; color: #ffffff"
+                  >
+                    {{ header }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="selectedOption === 'SETOR'">
+                <tr *ngFor="let setor of setores">
+                  <td>{{ setor.empresa }}</td>
+                  <td>{{ setor.nomeSetor }}</td>
+                  <td>{{ setor.responsavel }}</td>
+                  <td>{{ setor.contato }}</td>
+                  <td>{{ setor.status }}</td>
+                  <td>
+                    <span>
+                      <a
+                        (click)="editarSetor(setor.nomeSetor)"
+                        routerLink="/editUser"
+                        class="bi bi-pencil btn btn-primary custom-icon"
+                      ></a>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="selectedOption === 'PESSOA'">
+                <tr *ngFor="let pessoa of pessoas">
+                  <td>{{ pessoa.nomeCompleto }}</td>
+                  <td>{{ pessoa.cpf }}</td>
+                  <td>{{ pessoa.rg }}</td>
+                  <td>{{ pessoa.ctps }}</td>
+                  <td>{{ pessoa.numeroTelefone }}</td>
+                  <td>{{ pessoa.email }}</td>
+                  <td>{{ pessoa.empresa }}</td>
+                  <td>{{ pessoa.setorEmprego }}</td>
+                  <td>{{ pessoa.cargoEmprego }}</td>
+                  <td>
+                    <span>
+                      <a
+                        (click)="editarPessoa(pessoa.email)"
+                        routerLink="/editUser"
+                        class="bi bi-pencil btn btn-primary custom-icon"
+                      ></a>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
