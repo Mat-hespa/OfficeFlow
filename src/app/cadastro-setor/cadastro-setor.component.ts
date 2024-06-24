@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 interface ApiResponse {
   status: boolean;
@@ -47,7 +48,7 @@ export class CadastroSetorComponent {
   }
 
   getEmpresas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/companies').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
       (response) => {
         if (response.status) {
           this.empresas = response.companies;
@@ -69,7 +70,7 @@ export class CadastroSetorComponent {
       const setorData = this.setorForm.value;
       console.log(setorData)
       this.http
-        .post('http://localhost:9992/setor/create', setorData)
+        .post(`${environment.apiUrl}/setor/create`, setorData)
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({
@@ -94,7 +95,7 @@ export class CadastroSetorComponent {
   }
 
   loadSetores() {
-    this.http.get<ApiResponse>('http://localhost:9992/setores').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
       (response) => {
         if (response.status) {
           this.setores = response.setores;

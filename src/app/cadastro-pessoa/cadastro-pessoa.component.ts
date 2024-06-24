@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { environment } from 'src/environments/environment';
 
 interface ApiResponse {
   status: boolean;
@@ -71,7 +72,7 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   getEmpresas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/companies').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
       response => {
         if (response.status) {
           this.empresas = response.companies;
@@ -86,7 +87,7 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   onEmpresaChange(event: any): void {
-    this.http.get<ApiResponse>('http://localhost:9992/setor/' + event).subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/setor/` + event).subscribe(
       response => {
         this.setores = response.setores;
       },
@@ -101,7 +102,7 @@ export class CadastroPessoaComponent implements OnInit {
       const companyData = this.pessoaForm.value;
       console.log(companyData)
       this.http
-        .post('http://localhost:9992/pessoa/create', companyData)
+        .post(`${environment.apiUrl}/pessoa/create`, companyData)
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Pessoa cadastrada com sucesso' });

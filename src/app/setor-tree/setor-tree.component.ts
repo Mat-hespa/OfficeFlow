@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 interface Setor {
   nomeSetor: string;
@@ -21,7 +22,7 @@ export class SetorTreeComponent implements OnInit {
   }
 
   fetchSetores(): void {
-    this.http.get<{ status: boolean, setores: Setor[] }>('http://localhost:9992/setore/tree')
+    this.http.get<{ status: boolean, setores: Setor[] }>(`${environment.apiUrl}/setore/tree`)
       .subscribe(response => {
         if (response.status) {
           this.setores = response.setores;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 interface ApiResponse {
   status: boolean;
@@ -64,7 +65,7 @@ export class ListaComponent implements OnInit {
   }
 
   loadNomePessoas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/namePessoas').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/namePessoas`).subscribe(
       (response) => {
         if (response.status) {
           this.pessoasNames = response.pessoasNames;
@@ -79,7 +80,7 @@ export class ListaComponent implements OnInit {
   }
 
   loadSetores(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/setores').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
       (response) => {
         if (response.status) {
           this.setores = response.setores;
@@ -94,7 +95,7 @@ export class ListaComponent implements OnInit {
   }
 
   loadPessoas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/pessoas').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/pessoas`).subscribe(
       (response) => {
         if (response.status) {
           this.pessoas = response.pessoas;

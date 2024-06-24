@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 interface ApiResponse {
   status: boolean;
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   getNumeroEmpresas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/companies').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
       response => {
         if (response.status) {
           const numEmpresas = response.companies.length;
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit {
 
   getCargoUsuario(user: any): void {
     console.log(user)
-    this.http.get<ApiResponse>(`http://localhost:9992/student/${user}/cargo`).subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/student/${user}/cargo`).subscribe(
       response => {
         if (response.status) {
           sessionStorage.setItem('userRole', response.cargo)

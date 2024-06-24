@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 interface Student {
   nomeCompleto: string;
@@ -44,7 +45,7 @@ export class PerfilComponent implements OnInit {
   getStudentDetails(): void {
     const email = sessionStorage.getItem('userEmail');
     if (email) {
-      this.http.get<{ status: boolean, student: Student }>('http://localhost:9992/student/' + email).subscribe(
+      this.http.get<{ status: boolean, student: Student }>(`${environment.apiUrl}/student/` + email).subscribe(
         response => {
           if (response.status && response.student) {
             const student = response.student;
@@ -94,7 +95,7 @@ export class PerfilComponent implements OnInit {
 
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        this.http.post<any>('http://localhost:9992/student/change-password', requestBody, { headers: headers }).subscribe(
+        this.http.post<any>(`${environment.apiUrl}/student/change-password`, requestBody, { headers: headers }).subscribe(
           response => {
             if (response.status) {
               this.toast.success({ detail: 'Sucesso', summary: 'Senha alterada com sucesso' });

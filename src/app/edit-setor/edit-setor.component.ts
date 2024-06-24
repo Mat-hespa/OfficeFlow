@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 interface Setor {
   empresa: string;
@@ -69,7 +70,7 @@ export class EditSetorComponent implements OnInit {
   getSetorDetails(): void {
     const nomeSetor = sessionStorage.getItem('nomeSetor');
     if (nomeSetor) {
-      this.http.get<{ setor: Setor }>('http://localhost:9992/setores/' + nomeSetor).subscribe(
+      this.http.get<{ setor: Setor }>(`${environment.apiUrl}/setores/` + nomeSetor).subscribe(
         response => {
           const setor = response.setor;
           // console.log(setor)
@@ -92,7 +93,7 @@ export class EditSetorComponent implements OnInit {
   }
 
   getEmpresas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/companies').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
       response => {
         if (response.status) {
           this.empresas = response.companies;
@@ -107,7 +108,7 @@ export class EditSetorComponent implements OnInit {
   }
 
   loadSetores(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/setores').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
       response => {
         this.setores = response.setores;
         this.setores = this.setores.filter(setor => setor.nomeSetor !== this.setorNovo);
@@ -124,7 +125,7 @@ export class EditSetorComponent implements OnInit {
       const nomeSetor = sessionStorage.getItem('nomeSetor');
       const setorData = this.setorForm.value; 
       this.http
-        .put(`http://localhost:9992/setor/${nomeSetor}/update`, setorData) // Requisição PUT com o email na URL
+        .put(`${environment.apiUrl}/setor/${nomeSetor}/update`, setorData) // Requisição PUT com o email na URL
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Setor editado com sucesso' });

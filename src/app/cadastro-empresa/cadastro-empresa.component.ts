@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastro-empresa',
@@ -44,7 +45,7 @@ export class CadastroEmpresaComponent {
     if (this.companyForm.valid) {
       const companyData = this.companyForm.value;
       this.http
-        .post('http://localhost:9992/company/create', companyData)
+        .post(`${environment.apiUrl}/company/create`, companyData)
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Empresa cadastrada com sucesso' });

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { environment } from 'src/environments/environment';
 
 interface Pessoa {
   nomeCompleto: string;
@@ -99,7 +100,7 @@ export class EditUsuarioComponent implements OnInit {
   getPessoaDetails(): void {
     const email = sessionStorage.getItem('emailParaEdicao');
     if (email) {
-      this.http.get<{ pessoa: Pessoa }>('http://localhost:9992/pessoa/' + email).subscribe(
+      this.http.get<{ pessoa: Pessoa }>(`${environment.apiUrl}/pessoa/` + email).subscribe(
         response => {
           const pessoa = response.pessoa;
           if (pessoa) {
@@ -119,7 +120,7 @@ export class EditUsuarioComponent implements OnInit {
   }
 
   getEmpresas(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/companies').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
       response => {
         if (response.status) {
           this.empresas = response.companies;
@@ -134,7 +135,7 @@ export class EditUsuarioComponent implements OnInit {
   }
 
   loadSetores(): void {
-    this.http.get<ApiResponse>('http://localhost:9992/setores').subscribe(
+    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
       response => {
         this.setores = response.setores;
       },
@@ -150,7 +151,7 @@ export class EditUsuarioComponent implements OnInit {
       const pessoaData = this.pessoaForm.value; 
       delete pessoaData.email;
       this.http
-        .put(`http://localhost:9992/pessoa/${email}/update`, pessoaData) // Requisição PUT com o email na URL
+        .put(`${environment.apiUrl}/pessoa/${email}/update`, pessoaData) // Requisição PUT com o email na URL
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Pessoa editada com sucesso' });

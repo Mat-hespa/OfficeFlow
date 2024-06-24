@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class LoginComponent {
         password: password,
       };
       this.http
-        .post('http://localhost:9992/student/login', bodyData)
+        .post(`${environment.apiUrl}/student/login`, bodyData)
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Login efetuado' });

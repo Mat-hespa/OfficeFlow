@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
   registerPessoa(pessoa: any) {
     this.http
-      .post('http://localhost:9992/pessoa/create', pessoa)
+      .post(`${environment.apiUrl}/pessoa/create`, pessoa)
       .subscribe((resultData: any) => {
         if (resultData.status) {
           this.router.navigateByUrl('/login');
@@ -89,7 +90,7 @@ export class RegisterComponent implements OnInit {
       }
 
       this.http
-        .post('http://localhost:9992/student/create', bodyData)
+        .post(`${environment.apiUrl}/student/create`, bodyData)
         .subscribe(
           (resultData: any) => {
             if (resultData.status) {
