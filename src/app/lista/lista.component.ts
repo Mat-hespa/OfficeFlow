@@ -19,6 +19,7 @@ interface ApiResponse {
 })
 export class ListaComponent implements OnInit {
   selectedOption: string = 'SETOR';
+  loading: boolean = true; // Estado de carregamento
   headers: { [key: string]: string[] } = {
     EMPRESA: [
       'Razão Social',
@@ -59,12 +60,12 @@ export class ListaComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    // this.loadEmpresas();
     this.loadNomePessoas();
-    this.loadSetores()
+    this.loadSetores();
   }
 
   loadNomePessoas(): void {
+    this.loading = true;
     this.http.get<ApiResponse>(`${environment.apiUrl}/namePessoas`).subscribe(
       (response) => {
         if (response.status) {
@@ -72,14 +73,17 @@ export class ListaComponent implements OnInit {
         } else {
           console.error('Erro ao recuperar empresas:', response.message);
         }
+        this.loading = false;
       },
       (error) => {
         console.error('Erro ao recuperar empresas:', error);
+        this.loading = false;
       }
     );
   }
 
   loadSetores(): void {
+    this.loading = true;
     this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
       (response) => {
         if (response.status) {
@@ -87,14 +91,17 @@ export class ListaComponent implements OnInit {
         } else {
           console.error('Erro ao recuperar setores:', response.message);
         }
+        this.loading = false;
       },
       (error) => {
         console.error('Erro ao recuperar setores:', error);
+        this.loading = false;
       }
     );
   }
 
   loadPessoas(): void {
+    this.loading = true;
     this.http.get<ApiResponse>(`${environment.apiUrl}/pessoas`).subscribe(
       (response) => {
         if (response.status) {
@@ -102,15 +109,13 @@ export class ListaComponent implements OnInit {
         } else {
           console.error('Erro ao recuperar pessoas:', response.message);
         }
+        this.loading = false;
       },
       (error) => {
         console.error('Erro ao recuperar pessoas:', error);
+        this.loading = false;
       }
     );
-  }
-
-  onOptionChange(event: Event) {
-    // Não é mais necessário, a seleção é feita diretamente no botão
   }
 
   editarPessoa(email: string) {

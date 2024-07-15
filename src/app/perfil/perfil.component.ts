@@ -20,6 +20,7 @@ export class PerfilComponent implements OnInit {
   perfilForm: FormGroup;
   errorMessage: string = '';
   showPassword: boolean = false;
+  loading: boolean = true; // Estado de carregamento
 
   constructor(
     private router: Router,
@@ -36,7 +37,6 @@ export class PerfilComponent implements OnInit {
       confirmarSenha: ['', Validators.required]
     });
   }
-  
 
   ngOnInit(): void {
     this.getStudentDetails(); // Chama a função para obter os detalhes do estudante quando o componente é inicializado
@@ -49,7 +49,6 @@ export class PerfilComponent implements OnInit {
         response => {
           if (response.status && response.student) {
             const student = response.student;
-            console.log(student)
             this.perfilForm.patchValue({
               nomeCompleto: student.nomeCompleto,
               senhaAntiga: student.password
@@ -57,13 +56,16 @@ export class PerfilComponent implements OnInit {
           } else {
             console.error('Nenhum estudante encontrado para o email:', email);
           }
+          this.loading = false; // Desativa o estado de carregamento após a conclusão da requisição
         },
         error => {
           console.error('Erro ao recuperar os detalhes do estudante:', error);
+          this.loading = false; // Desativa o estado de carregamento em caso de erro
         }
       );
     } else {
       console.error('Email não encontrado na sessão');
+      this.loading = false; // Desativa o estado de carregamento se o email não for encontrado
     }
   }
 
@@ -79,6 +81,8 @@ export class PerfilComponent implements OnInit {
   }
 
   generateAsterisks(length: number): string {
+    console.log(length);
+    console.log('*'.repeat(length));
     return '*'.repeat(length);
   }
 

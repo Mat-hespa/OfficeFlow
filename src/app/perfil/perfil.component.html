@@ -1,84 +1,86 @@
 <div class="container mt-4" style="color: #171a4a">
-    <app-header></app-header>
-    <div class="row justify-content-center align-items-center vh-100 bg-mobile">
-      <div class="col-md-6 mt-3 mb-4">
-        <div
-          class="card mt-5 h-auto"
-          style="background-color: #eed1b5; border-radius: 10px"
-        >
-          <div class="card-body">
-            <h3 class="card-title mb-4">Meu Perfil</h3>
-            <form [formGroup]="perfilForm">
-              <div class="mb-3">
-                <label for="nomeCompleto" class="form-label">Nome Completo</label>
-                <input
-                  style="background-color: rgba(255, 255, 255, 0.611)"
-                  type="text"
-                  class="form-control"
-                  id="nomeCompleto"
-                  formControlName="nomeCompleto"
-                  readonly
-                />
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  style="background-color: rgba(255, 255, 255, 0.611)"
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  formControlName="email"
-                  readonly
-                />
-              </div>
-              <div class="mb-3">
-                <label for="senhaAntiga" class="form-label">Senha Antiga</label>
-                <input
-                  style="background-color: rgba(255, 255, 255, 0.611)"
-                  type="password"
-                  class="form-control"
-                  id="senhaAntiga"
-                  formControlName="senhaAntiga"
-                  [value]="generateAsterisks(perfilForm.get('senhaAntiga')?.value)"
-                  readonly
-                />
-              </div>
-              <div class="mb-3">
-                <label for="novaSenha" class="form-label">Nova Senha</label>
-                <input
-                  style="background-color: rgba(255, 255, 255, 0.611)"
-                  type="password"
-                  class="form-control"
-                  id="novaSenha"
-                  formControlName="novaSenha"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-                <input
-                  style="background-color: rgba(255, 255, 255, 0.611)"
-                  type="password"
-                  class="form-control"
-                  id="confirmarSenha"
-                  formControlName="confirmarSenha"
-                />
-              </div>
-              <div class="row justify-content-between">
-                <button
-                  style="background-color: #171a4a; border: 0;"
-                  class="btn btn-primary col"
-                  type="button"
-                  id="mudarSenhaButton"
-                  (click)="changePassword()"
-                >
-                  Mudar Senha
-                </button>
-                <a class="btn btn-danger col" (click)="logout()">Logout</a>
-              </div>
-            </form>
+  <app-header></app-header>
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-6 mt-3 mb-4">
+      <div class="card mt-5 h-auto" style="background-color: #eed1b5; border-radius: 10px">
+        <div class="card-body">
+          <h3 class="card-title mb-4">Meu Perfil</h3>
+          <div *ngIf="loading" class="d-flex justify-content-center align-items-center mb-4">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
+          <form [formGroup]="perfilForm" *ngIf="!loading">
+            <div class="mb-3">
+              <label for="nomeCompleto" class="form-label">Nome Completo</label>
+              <input
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                type="text"
+                class="form-control"
+                id="nomeCompleto"
+                formControlName="nomeCompleto"
+                readonly
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                readonly
+              />
+            </div>
+            <!-- <div class="mb-3">
+              <label for="senhaAntiga" class="form-label">Senha Antiga</label>
+              <input
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                type="password"
+                class="form-control"
+                id="senhaAntiga"
+                formControlName="senhaAntiga"
+                [value]="generateAsterisks(perfilForm.get('senhaAntiga')?.value)"
+                readonly
+              />
+            </div> -->
+            <div class="mb-3">
+              <label for="novaSenha" class="form-label">Nova Senha</label>
+              <input
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                type="password"
+                class="form-control"
+                id="novaSenha"
+                formControlName="novaSenha"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+              <input
+                style="background-color: rgba(255, 255, 255, 0.611)"
+                type="password"
+                class="form-control"
+                id="confirmarSenha"
+                formControlName="confirmarSenha"
+              />
+            </div>
+            <div class="row justify-content-between">
+              <button
+                style="background-color: #171a4a; border: 0;"
+                class="btn btn-primary col me-2"
+                type="button"
+                id="mudarSenhaButton"
+                (click)="changePassword()"
+              >
+                Mudar Senha
+              </button>
+              <a class="btn btn-danger col" (click)="logout()">Logout</a>
+            </div>
+            
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
