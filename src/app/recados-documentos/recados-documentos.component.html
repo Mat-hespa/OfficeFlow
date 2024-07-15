@@ -1,0 +1,23 @@
+<div class="container mt-5" style="color: #171a4a">
+    <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+      <div class="col-md-12 mt-3 mb-5">
+        <div class="card mt-2" style="background-color: #eed1b5">
+          <div class="card-body">
+            <h5 class="mb-0 mt-4" style="font-weight: bold">Recados e Documentos Recebidos</h5>
+            <div *ngFor="let document of documents">
+              <div class="card mt-3" style="background-color: rgba(255, 255, 255, 0.9)">
+                <div class="card-body">
+                  <h6>De: {{ document.registrant }}</h6>
+                  <p>Status: {{ document.status }}</p>
+                  <p>{{ document.content }}</p>
+                  <button class="btn btn-primary" (click)="updateStatus(document, 'Visualizado')">Marcar como Visualizado</button>
+                  <button class="btn btn-success" (click)="updateStatus(document, 'Finalizado')">Marcar como Finalizado</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -26,6 +26,8 @@ import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
 import { NumericOnlyDirective } from './directives/numeric-only.directive';
 import { EditSetorComponent } from './edit-setor/edit-setor.component';
 import { SetorTreeComponent } from './setor-tree/setor-tree.component';
+import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
+import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 
 
 
@@ -45,7 +47,9 @@ import { SetorTreeComponent } from './setor-tree/setor-tree.component';
     EditUsuarioComponent,
     NumericOnlyDirective,
     EditSetorComponent,
-    SetorTreeComponent
+    SetorTreeComponent,
+    CadastroDocumentoComponent,
+    RecadosDocumentosComponent
   ],
   imports: [
     BrowserModule,

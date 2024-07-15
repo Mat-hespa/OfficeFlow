@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/auth/auth.service';
 
 @Component({
@@ -7,10 +8,20 @@ import { AuthService } from 'src/auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  hasNewDocuments: boolean = false;
 
   authService: AuthService;
 
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, private router: Router) {
     this.authService = authService;
+  }
+
+  checkForNewDocuments() {
+    // Lógica para verificar novos documentos e definir hasNewDocuments como true ou false
+  }
+
+  openRecadosDocumentos() {
+    this.hasNewDocuments = false;
+    this.router.navigateByUrl('/recados-documentos');
   }
 }

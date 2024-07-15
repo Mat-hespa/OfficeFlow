@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<div class="container mt-5" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-5">
+      <div class="card mt-2" style="background-color: #eed1b5">
+        <div class="card-body">
+          <form class="row g-3" [formGroup]="documentForm" (ngSubmit)="registerDocument()">
+            <h5 class="mb-0 mt-4" style="font-weight: bold">Cadastro de Documento</h5>
+
+            <!-- Campo Usuário de Envio -->
+            <div class="col-md-6">
+              <label for="registrant" class="form-label" style="color: #171a4a">Usuário de envio</label>
+              <input type="text" formControlName="registrant" class="form-control border border-2" id="registrant" style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="documentForm.get('registrant')?.invalid && documentForm.get('registrant')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Destinatário -->
+            <div class="col-md-6">
+              <label for="recipient" class="form-label" style="color: #171a4a">Destinatário</label>
+              <select formControlName="recipient" class="form-control border border-2" id="recipient" style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione um destinatário</option>
+                <option *ngFor="let pessoa of pessoasNames" [value]="pessoa">{{ pessoa }}</option>
+              </select>
+              <div *ngIf="documentForm.get('recipient')?.invalid && documentForm.get('recipient')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo de Upload de Arquivo -->
+            <div class="col-md-12">
+              <label for="documentFile" class="form-label" style="color: #171a4a">Arquivo do Documento</label>
+              <input formControlName="documentFile" type="file" (change)="onFileSelected($event)" class="form-control border border-2" id="documentFile" style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="documentForm.get('documentFile')?.invalid && documentForm.get('documentFile')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Descrição do Documento -->
+            <div class="col-md-12">
+              <label for="description" class="form-label" style="color: #171a4a">Descrição do Documento</label>
+              <textarea formControlName="description" class="form-control border border-2" id="description" style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">Cadastrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

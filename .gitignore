@@ -61,3 +61,6 @@ coverage/
 
 # Configurações de deploy
 .deploy/
+
+# Angular cache
+.angular/

@@ -13,6 +13,8 @@ import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { EditSetorComponent } from './edit-setor/edit-setor.component';
 import { SetorTreeComponent } from './setor-tree/setor-tree.component';
+import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
+import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -27,7 +29,8 @@ const routes: Routes = [
   { path: 'editUser', component: EditUsuarioComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: true }},
   { path: 'editSetor', component: EditSetorComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: true }},
   { path: 'setorTree', component: SetorTreeComponent},
-
+  { path: 'cadastroDocumento', component: CadastroDocumentoComponent},
+  { path: 'recados-documentos', component: RecadosDocumentosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
 ];
 
 @NgModule({
