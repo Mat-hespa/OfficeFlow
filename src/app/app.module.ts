@@ -29,6 +29,7 @@ import { SetorTreeComponent } from './setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
 import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
+import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
 
 
 
@@ -51,7 +52,8 @@ import { RecadosComponent } from './cadastro-recados/cadastro-recados.component'
     SetorTreeComponent,
     CadastroDocumentoComponent,
     RecadosDocumentosComponent,
-    RecadosComponent
+    RecadosComponent,
+    RecadosRecadosComponent
   ],
   imports: [
     BrowserModule,

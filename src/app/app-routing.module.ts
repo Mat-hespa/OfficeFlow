@@ -16,6 +16,7 @@ import { SetorTreeComponent } from './setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
 import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
+import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'setorTree', component: SetorTreeComponent},
   { path: 'cadastroDocumento', component: CadastroDocumentoComponent},
   { path: 'recados-documentos', component: RecadosDocumentosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
-  { path: 'recados', component: RecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'cadastroRecados', component: RecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'recados', component: RecadosRecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
 ];
 
 @NgModule({

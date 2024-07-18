@@ -1,0 +1,10 @@
+/* src/app/components/recados-recebidos/recados-recebidos.component.scss */
+.recados-container {
+    max-height: 75vh; /* Aumentado para 75vh */
+    overflow-y: auto; /* Adiciona rolagem vertical */
+    padding-right: 10px; /* Adiciona espaço para a barra de rolagem */
+  }
+  
+  .card {
+    margin-bottom: 10px; /* Adiciona espaçamento entre os cartões */
+  }

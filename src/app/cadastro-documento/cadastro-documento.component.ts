@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 interface ApiResponse {
   status: boolean;
@@ -21,7 +22,7 @@ export class CadastroDocumentoComponent implements OnInit {
   pessoasNames: string[] = [];
   loading: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private toast: NgToastService) {
+    constructor(private formBuilder: FormBuilder, private http: HttpClient, private toast: NgToastService, private router: Router ) {
     this.documentForm = this.formBuilder.group({
       registrant: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
       documentFile: ['', Validators.required],
@@ -73,6 +74,7 @@ export class CadastroDocumentoComponent implements OnInit {
       this.http.post(`${environment.apiUrl}/api/documentos`, formData).subscribe(
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Documento cadastrado com sucesso!' });
+          this.router.navigateByUrl('/home');
         },
         (error) => {
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao cadastrar documento.' });

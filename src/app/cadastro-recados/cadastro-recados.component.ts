@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 interface ApiResponse {
   status: boolean;
@@ -23,7 +24,8 @@ export class RecadosComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private router: Router
   ) {
     this.recadoForm = this.formBuilder.group({
       emailRemetente: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
@@ -65,6 +67,7 @@ export class RecadosComponent implements OnInit {
       this.http.post(`${environment.apiUrl}/recados`, recado).subscribe(
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Recado enviado com sucesso!' });
+          this.router.navigateByUrl('/home');
         },
         (error) => {
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao enviar recado.' });
