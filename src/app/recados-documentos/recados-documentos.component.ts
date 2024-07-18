@@ -10,33 +10,26 @@ import { environment } from 'src/environments/environment';
 })
 export class RecadosDocumentosComponent implements OnInit {
   documents: any[] = [];
+  loading: boolean = false;
 
   constructor(private http: HttpClient, private toast: NgToastService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.loadDocuments();
   }
 
   loadDocuments() {
-    this.http.get(`${environment.apiUrl}/documents`).subscribe(
-      (documents: any) => {
-        this.documents = documents;
+    this.loading = true;
+    const recipientEmail = sessionStorage.getItem('userEmail'); // Substitua pelo email do recipient vindo do frontend
+    this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}`).subscribe(
+      (response: any) => {
+        this.documents = response.documentos;
+        this.loading = false;
       },
       (error) => {
         this.toast.error({ detail: 'ERROR', summary: 'Erro ao carregar documentos.' });
-      }
-    );
-  }
-
-  updateStatus(document: any, status: string) {
-    const updatedDocument = { ...document, status };
-    this.http.put(`${environment.apiUrl}/document/update`, updatedDocument).subscribe(
-      () => {
-        this.toast.success({ detail: 'SUCCESS', summary: 'Status atualizado com sucesso!' });
-        this.loadDocuments();
-      },
-      (error) => {
-        this.toast.error({ detail: 'ERROR', summary: 'Erro ao atualizar status.' });
+        this.loading = false;
       }
     );
   }

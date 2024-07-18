@@ -1,17 +1,31 @@
+<app-header></app-header>
+
 <div class="container mt-5" style="color: #171a4a">
-    <div class="row justify-content-center align-items-center vh-100 bg-mobile">
-      <div class="col-md-12 mt-3 mb-5">
-        <div class="card mt-2" style="background-color: #eed1b5">
-          <div class="card-body">
-            <h5 class="mb-0 mt-4" style="font-weight: bold">Recados e Documentos Recebidos</h5>
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-5">
+      <div class="card mt-2" style="background-color: #eed1b5">
+        <div class="card-body">
+          <h5 class="mb-2 mt-2" style="font-weight: bold">Recados e Documentos Recebidos</h5>
+          
+          <div *ngIf="loading" class="text-center mt-3">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div *ngIf="!loading && documents.length === 0" class="text-center mt-3">
+            <p>Nenhum documento encontrado.</p>
+          </div>
+
+          <div class="documents-container" *ngIf="!loading && documents.length > 0">
             <div *ngFor="let document of documents">
               <div class="card mt-3" style="background-color: rgba(255, 255, 255, 0.9)">
                 <div class="card-body">
-                  <h6>De: {{ document.registrant }}</h6>
-                  <p>Status: {{ document.status }}</p>
-                  <p>{{ document.content }}</p>
-                  <button class="btn btn-primary" (click)="updateStatus(document, 'Visualizado')">Marcar como Visualizado</button>
-                  <button class="btn btn-success" (click)="updateStatus(document, 'Finalizado')">Marcar como Finalizado</button>
+                  <h6 style="color: #171a4a">De: {{ document.registrant }}</h6>
+                  <p style="color: #171a4a">Status: {{ document.status }}</p>
+                  <p style="color: #171a4a">{{ document.description }}</p>
+                  <p style="color: #171a4a"><strong>Arquivo:</strong> {{ document.fileUrl.split('/').pop() }}</p>
+                  <a [href]="document.fileUrl" target="_blank" class="btn btn-secondary" style="background-color: #171a4a; border-color: #171a4a">Download</a>
                 </div>
               </div>
             </div>
@@ -20,4 +34,4 @@
       </div>
     </div>
   </div>
-  
+</div>
