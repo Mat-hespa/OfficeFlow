@@ -1,0 +1,51 @@
+<!-- src/app/components/recados/recados.component.html -->
+<app-header></app-header>
+
+<div class="container mt-5" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-5">
+      <div class="card mt-2" style="background-color: #eed1b5">
+        <div class="card-body">
+          <form class="row g-3" [formGroup]="recadoForm" (ngSubmit)="enviarRecado()">
+            <h5 class="mb-0 mt-4" style="font-weight: bold">Enviar Recado</h5>
+
+            <!-- Campo Usuário de Envio -->
+            <div class="col-md-6">
+              <label for="emailRemetente" class="form-label" style="color: #171a4a">Usuário de envio</label>
+              <input type="text" formControlName="emailRemetente" class="form-control border border-2" id="emailRemetente" style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="recadoForm.get('emailRemetente')?.invalid && recadoForm.get('emailRemetente')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Destinatário -->
+            <div class="col-md-6">
+              <label for="emailDestinatario" class="form-label" style="color: #171a4a">Destinatário</label>
+              <select formControlName="emailDestinatario" class="form-control border border-2" id="emailDestinatario" style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione um destinatário</option>
+                <option *ngFor="let email of emails" [value]="email">{{ email }}</option>
+              </select>
+              <div *ngIf="recadoForm.get('emailDestinatario')?.invalid && recadoForm.get('emailDestinatario')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Mensagem -->
+            <div class="col-md-12">
+              <label for="mensagem" class="form-label" style="color: #171a4a">Mensagem</label>
+              <textarea formControlName="mensagem" class="form-control border border-2" id="mensagem" style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
+              <div *ngIf="recadoForm.get('mensagem')?.invalid && recadoForm.get('mensagem')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">Enviar Recado</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
