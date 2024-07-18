@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Importe o FormsModule
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +30,15 @@ import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-docume
 import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
 import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
+
+// Import the library
+import { LottieModule } from 'ngx-lottie';
+
+// Note we need a separate function as it's required
+// by the AOT compilation.
+export function playerFactory() {
+  return import('lottie-web');
+}
 
 
 
@@ -64,9 +73,13 @@ import { RecadosRecadosComponent } from './recados-recados/recados-recados.compo
     NgToastModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    LottieModule.forRoot({ player: playerFactory }),
+
   ],
   providers: [BsDatepickerConfig],
-  bootstrap: [AppComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
+  exports: [LoginComponent]
 })
 export class AppModule { }

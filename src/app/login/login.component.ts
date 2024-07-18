@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { AnimationOptions } from 'ngx-lottie';
 import { environment } from 'src/environments/environment';
 
 
@@ -14,6 +15,9 @@ import { environment } from 'src/environments/environment';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
+  options: AnimationOptions = {
+    path: '../../assets/animation1.json',
+  };
 
   constructor(
     private router: Router,
