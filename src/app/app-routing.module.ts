@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
-import { ChamadosComponent } from './chamados/chamados.component';
 import { CadastroEmpresaComponent } from './cadastro-empresa/cadastro-empresa.component';
 import { CadastroSetorComponent } from './cadastro-setor/cadastro-setor.component';
 import { CadastroPessoaComponent } from './cadastro-pessoa/cadastro-pessoa.component';
@@ -17,6 +16,7 @@ import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-docume
 import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
 import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
+import { InboxComponent } from './inbox/inbox.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: 'recados-documentos', component: RecadosDocumentosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'cadastroRecados', component: RecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'recados', component: RecadosRecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'inbox', component: InboxComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
 ];
 
 @NgModule({

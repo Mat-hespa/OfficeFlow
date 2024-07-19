@@ -30,6 +30,7 @@ import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-docume
 import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
 import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
+import { InboxComponent } from './inbox/inbox.component';
 
 
 
@@ -53,7 +54,8 @@ import { RecadosRecadosComponent } from './recados-recados/recados-recados.compo
     CadastroDocumentoComponent,
     RecadosDocumentosComponent,
     RecadosComponent,
-    RecadosRecadosComponent
+    RecadosRecadosComponent,
+    InboxComponent
   ],
   imports: [
     BrowserModule,

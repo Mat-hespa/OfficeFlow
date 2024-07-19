@@ -11,63 +11,55 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  hasNewDocuments: boolean = false;
-  newRecadosCount: number = 0;
-  private checkRecadosSubscription: Subscription | undefined;
-  private checkDocumentsSubscription: Subscription | undefined;
+  newNotificationsCount: number = 0;
+  private checkNotificationsSubscription: Subscription | undefined;
 
   constructor(public authService: AuthService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.checkForNewDocuments();
-    this.checkRecados();
-    this.checkRecadosSubscription = interval(60000).subscribe(() => this.checkRecados()); // Verifica a cada minuto
-    this.checkDocumentsSubscription = interval(60000).subscribe(() => this.checkForNewDocuments()); // Verifica a cada minuto
+    this.checkForNewNotifications();
+    this.checkNotificationsSubscription = interval(60000).subscribe(() => this.checkForNewNotifications()); // Verifica a cada minuto
   }
 
   ngOnDestroy(): void {
-    if (this.checkRecadosSubscription) {
-      this.checkRecadosSubscription.unsubscribe();
-    }
-    if (this.checkDocumentsSubscription) {
-      this.checkDocumentsSubscription.unsubscribe();
+    if (this.checkNotificationsSubscription) {
+      this.checkNotificationsSubscription.unsubscribe();
     }
   }
 
-  checkRecados(): void {
+  checkForNewNotifications(): void {
     const recipientEmail = sessionStorage.getItem('userEmail');
     if (recipientEmail) {
+      // Reset notifications count before fetching new counts
+      this.newNotificationsCount = 0;
+
       this.http.get(`${environment.apiUrl}/recados/${recipientEmail}/unread-count`).subscribe(
         (response: any) => {
-          this.newRecadosCount = response.unreadCount;
+          this.newNotificationsCount += response.unreadCount;
         },
         (error) => {
           console.error('Erro ao verificar novos recados.', error);
         }
       );
+
+      this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}/unread`).subscribe(
+        (response: any) => {
+          console.log('Novos documentos:', response);
+          this.newNotificationsCount += response.unreadCount;
+        },
+        (error) => {
+          console.error('Erro ao verificar novos documentos:', error);
+        }
+      );
     }
   }
 
-  checkForNewDocuments(): void {
-    // Lógica para verificar novos documentos e definir hasNewDocuments como true ou false
-    // Exemplo:
-    this.http.get(`${environment.apiUrl}/documentos/unread-count`).subscribe(
-      (response: any) => {
-        this.hasNewDocuments = response.unreadCount > 0;
-      },
-      (error) => {
-        console.error('Erro ao verificar novos documentos.', error);
-      }
-    );
+  openInbox(): void {
+    this.newNotificationsCount = 0;
+    this.router.navigateByUrl('/inbox');
   }
 
-  openRecadosDocumentos() {
-    this.hasNewDocuments = false;
-    this.router.navigateByUrl('/recados-documentos');
-  }
-
-  openRecados(): void {
-    this.newRecadosCount = 0;
-    this.router.navigateByUrl('/recados');
+  openPerfil(): void {
+    this.router.navigateByUrl('/perfil');
   }
 }

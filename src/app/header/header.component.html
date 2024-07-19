@@ -12,28 +12,15 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/lista" routerLinkActive="active" style="color: #eed1b5;" *ngIf="authService.isAdmin()">Tabelas</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/perfil" routerLinkActive="active" style="color: #eed1b5;" >Meu perfil</a>
-        </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" routerLink="/chamados" routerLinkActive="active">Chamados</a> -->
-        </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" routerLink="/documentos" routerLinkActive="active">Documentos</a> -->
-        </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" routerLink="/recados" routerLinkActive="active">Recados</a> -->
-        </li>
         <li class="nav-item position-relative">
-          <button class="btn notification-button" [class.new]="hasNewDocuments" (click)="openRecadosDocumentos()">
-            <i class="fa-solid fa-folder"></i>
-            <span *ngIf="hasNewDocuments" class="notification-badge"></span>
+          <button class="btn notification-button" (click)="openInbox()">
+            <i class="fa-solid fa-bell"></i>
+            <span *ngIf="newNotificationsCount > 0" class="notification-badge">{{ newNotificationsCount }}</span>
           </button>
         </li>
         <li class="nav-item position-relative">
-          <button class="btn notification-button" (click)="openRecados()">
-            <i class="fa-solid fa-envelope"></i>
-            <span *ngIf="newRecadosCount > 0" class="notification-badge">{{ newRecadosCount }}</span>
+          <button class="btn notification-button" (click)="openPerfil()">
+            <i class="fa-solid fa-user"></i>
           </button>
         </li>
       </ul>
