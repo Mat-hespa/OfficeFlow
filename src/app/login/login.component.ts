@@ -16,7 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
   options: AnimationOptions = {
-    path: '../../assets/animation1.json',
+    path: '../../assets/animation2.json',
   };
 
   constructor(
