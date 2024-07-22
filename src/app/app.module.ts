@@ -27,9 +27,7 @@ import { NumericOnlyDirective } from './directives/numeric-only.directive';
 import { EditSetorComponent } from './edit-setor/edit-setor.component';
 import { SetorTreeComponent } from './setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
-import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
-import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
 import { InboxComponent } from './inbox/inbox.component';
 
 
@@ -52,9 +50,7 @@ import { InboxComponent } from './inbox/inbox.component';
     EditSetorComponent,
     SetorTreeComponent,
     CadastroDocumentoComponent,
-    RecadosDocumentosComponent,
     RecadosComponent,
-    RecadosRecadosComponent,
     InboxComponent
   ],
   imports: [

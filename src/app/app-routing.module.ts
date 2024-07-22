@@ -13,9 +13,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { EditSetorComponent } from './edit-setor/edit-setor.component';
 import { SetorTreeComponent } from './setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
-import { RecadosDocumentosComponent } from './recados-documentos/recados-documentos.component';
 import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
-import { RecadosRecadosComponent } from './recados-recados/recados-recados.component';
 import { InboxComponent } from './inbox/inbox.component';
 
 const routes: Routes = [
@@ -31,10 +29,8 @@ const routes: Routes = [
   { path: 'editUser', component: EditUsuarioComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: true }},
   { path: 'editSetor', component: EditSetorComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: true }},
   { path: 'setorTree', component: SetorTreeComponent},
-  { path: 'cadastroDocumento', component: CadastroDocumentoComponent},
-  { path: 'recados-documentos', component: RecadosDocumentosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'cadastroDocumento', component: CadastroDocumentoComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'cadastroRecados', component: RecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
-  { path: 'recados', component: RecadosRecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'inbox', component: InboxComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
 ];
 
