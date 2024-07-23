@@ -26,8 +26,10 @@
                     <p style="color: #171a4a"><strong>De:</strong> {{ document.registrant }}</p>
                     <p style="color: #171a4a"><strong>Descrição:</strong> {{ document.description }}</p>
                     <p style="color: #171a4a"><strong>Arquivo:</strong> {{ document.fileUrl.split('/').pop() }}</p>
-                    <a [href]="document.fileUrl" target="_blank" class="btn btn-secondary" style="background-color: #171a4a; border-color: #171a4a">Download</a>
-                    <button *ngIf="!document.read" class="btn btn-primary ml-2" (click)="markDocumentAsRead(document._id)">Marcar como lido</button>
+                    <div class="button-group mt-2">
+                      <a [href]="document.fileUrl" target="_blank" class="btn btn-secondary" style="background-color: #171a4a; border-color: #171a4a">Download</a>
+                      <button *ngIf="!document.read" class="btn btn-primary" style="margin-left: 10px;" (click)="markDocumentAsRead(document._id)">Marcar como lido</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -41,7 +43,9 @@
                     <p style="color: #171a4a"><strong>De:</strong> {{ recado.emailRemetente }}</p>
                     <p style="color: #171a4a"><strong>Mensagem:</strong> {{ recado.mensagem }}</p>
                     <p style="color: #171a4a"><strong>Para:</strong> {{ recado.emailDestinatario }}</p>
-                    <button *ngIf="!recado.read" class="btn btn-primary" style="padding-left: 10px;" (click)="markRecadoAsRead(recado._id)">Marcar como lido</button>
+                    <div class="button-group mt-2">
+                      <button *ngIf="!recado.read" class="btn btn-primary" (click)="markRecadoAsRead(recado._id)">Marcar como lido</button>
+                    </div>
                   </div>
                 </div>
               </div>

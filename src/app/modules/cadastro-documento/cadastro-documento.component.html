@@ -22,7 +22,7 @@
               <label for="recipient" class="form-label" style="color: #171a4a">Destinatário</label>
               <select formControlName="recipient" class="form-control border border-2" id="recipient" style="background-color: rgba(255, 255, 255, 0.611)">
                 <option value="" disabled selected>Selecione um destinatário</option>
-                <option *ngFor="let pessoa of pessoasNames" [value]="pessoa">{{ pessoa }}</option>
+                <option *ngFor="let pessoa of pessoasNames" [value]="pessoa.email">{{ pessoa.email }}</option>
               </select>
               <div *ngIf="documentForm.get('recipient')?.invalid && documentForm.get('recipient')?.touched" class="text-danger">
                 Este campo é obrigatório.

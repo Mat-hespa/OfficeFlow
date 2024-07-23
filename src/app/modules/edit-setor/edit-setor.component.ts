@@ -3,6 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { EmpresaModel } from 'src/app/shared/models/empresaModel';
 import { environment } from 'src/environments/environment';
 
 interface Setor {
@@ -18,12 +20,6 @@ interface Setor {
   descricaoTelefoneResponsavel: string;
 }
 
-interface ApiResponse {
-  status: boolean;
-  companies: any[];
-  setores: any[];
-  message?: string;
-}
 @Component({
   selector: 'app-edit-setor',
   templateUrl: './edit-setor.component.html',
@@ -45,6 +41,7 @@ export class EditSetorComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
+    private apiServiceService: ApiServiceService
   ) {
 
     this.setorForm = this.formBuilder.group({
@@ -62,7 +59,20 @@ export class EditSetorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmpresas();
+    this.apiServiceService.getEmpresas().subscribe(
+      response => {
+        if (response.status) {
+          console.log('Empresas recuperadas com sucesso:', response.companies);
+          this.empresas = response.companies;
+          console.log('Empresas no cadastro:', this.empresas);
+        } else {
+          console.error('Erro ao recuperar empresas:', response.message);
+        }
+      },
+      error => {
+        console.error('Erro ao recuperar empresas:', error);
+      }
+    );
     this.getSetorDetails();
     this.loadSetores();
   }
@@ -92,30 +102,10 @@ export class EditSetorComponent implements OnInit {
     }
   }
 
-  getEmpresas(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
-      response => {
-        if (response.status) {
-          this.empresas = response.companies;
-        } else {
-          console.error('Erro ao recuperar empresas:', response.message);
-        }
-      },
-      error => {
-        console.error('Erro ao recuperar empresas:', error);
-      }
-    );
-  }
-
   loadSetores(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
-      response => {
-        this.setores = response.setores;
-        this.setores = this.setores.filter(setor => setor.nomeSetor !== this.setorNovo);
-        console.log(this.setores)
-      },
-      error => {
-        console.error('Erro ao recuperar setores:', error);
+    this.apiServiceService.loadSetores().subscribe(
+      setores => {
+        this.setores = setores;
       }
     );
   }

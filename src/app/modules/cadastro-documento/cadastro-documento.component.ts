@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
-interface ApiResponse {
-  status: boolean;
-  pessoasNames: { email: string }[];
-  message: string;
+interface Pessoa {
+  email: string;
+  nome: string;
 }
 
 @Component({
@@ -19,10 +19,16 @@ interface ApiResponse {
 export class CadastroDocumentoComponent implements OnInit {
   documentForm: FormGroup;
   selectedFile: File | null = null;
-  pessoasNames: string[] = [];
+  pessoasNames: Pessoa[] = [];
   loading: boolean = false;
 
-    constructor(private formBuilder: FormBuilder, private http: HttpClient, private toast: NgToastService, private router: Router ) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private http: HttpClient, 
+    private toast: NgToastService, 
+    private router: Router,
+    private apiServiceService: ApiServiceService
+  ) {
     this.documentForm = this.formBuilder.group({
       registrant: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
       documentFile: ['', Validators.required],
@@ -37,17 +43,13 @@ export class CadastroDocumentoComponent implements OnInit {
 
   loadNomePessoas(): void {
     this.loading = true;
-    this.http.get<ApiResponse>(`${environment.apiUrl}/namePessoas`).subscribe(
-      (response) => {
-        if (response.status) {
-          this.pessoasNames = response.pessoasNames.map(pessoa => pessoa.email);
-        } else {
-          console.error('Erro ao recuperar nomes das pessoas:', response.message);
-        }
+    this.apiServiceService.loadNomePessoas().subscribe(
+      (pessoasNames: Pessoa[]) => {
+        this.pessoasNames = pessoasNames;
+        console.log('Pessoas:', this.pessoasNames);
         this.loading = false;
       },
-      (error) => {
-        console.error('Erro ao recuperar nomes das pessoas:', error);
+      error => {
         this.loading = false;
       }
     );

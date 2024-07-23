@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 interface ApiResponse {
   status: boolean;
@@ -25,7 +26,8 @@ export class RecadosComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private toast: NgToastService,
-    private router: Router
+    private router: Router,
+    private apiServiceService: ApiServiceService
   ) {
     this.recadoForm = this.formBuilder.group({
       emailRemetente: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
@@ -35,22 +37,17 @@ export class RecadosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadEmails();
+    this.loadNomePessoas();
   }
 
-  loadEmails(): void {
+  loadNomePessoas(): void {
     this.loading = true;
-    this.http.get<ApiResponse>(`${environment.apiUrl}/namePessoas`).subscribe(
-      (response) => {
-        if (response.status) {
-          this.emails = response.pessoasNames.map(pessoa => pessoa.email);
-        } else {
-          console.error('Erro ao recuperar emails:', response.message);
-        }
+    this.apiServiceService.loadNomePessoas().subscribe(
+      (pessoasNames: { email: string }[]) => {
+        this.emails = pessoasNames.map(pessoa => pessoa.email);
         this.loading = false;
       },
-      (error) => {
-        console.error('Erro ao recuperar emails:', error);
+      error => {
         this.loading = false;
       }
     );

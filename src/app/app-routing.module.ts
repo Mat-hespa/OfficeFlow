@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { CadastroEmpresaComponent } from './cadastro-empresa/cadastro-empresa.component';
-import { CadastroSetorComponent } from './cadastro-setor/cadastro-setor.component';
-import { CadastroPessoaComponent } from './cadastro-pessoa/cadastro-pessoa.component';
-import { ListaComponent } from './lista/lista.component';
-import { PerfilComponent } from './perfil/perfil.component';
-import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
+import { LoginComponent } from './modules/login/login.component';
+import { HomeComponent } from './modules/home/home.component';
+import { RegisterComponent } from './modules/register/register.component';
+import { CadastroEmpresaComponent } from './modules/cadastro-empresa/cadastro-empresa.component';
+import { CadastroSetorComponent } from './modules/cadastro-setor/cadastro-setor.component';
+import { CadastroPessoaComponent } from './modules/cadastro-pessoa/cadastro-pessoa.component';
+import { ListaComponent } from './modules/lista/lista.component';
+import { PerfilComponent } from './modules/perfil/perfil.component';
+import { EditUsuarioComponent } from './modules/edit-usuario/edit-usuario.component';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { EditSetorComponent } from './edit-setor/edit-setor.component';
-import { SetorTreeComponent } from './setor-tree/setor-tree.component';
-import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
-import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
-import { InboxComponent } from './inbox/inbox.component';
+import { EditSetorComponent } from './modules/edit-setor/edit-setor.component';
+import { SetorTreeComponent } from './modules/setor-tree/setor-tree.component';
+import { CadastroDocumentoComponent } from './modules/cadastro-documento/cadastro-documento.component';
+import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.component';
+import { InboxComponent } from './modules/inbox/inbox.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

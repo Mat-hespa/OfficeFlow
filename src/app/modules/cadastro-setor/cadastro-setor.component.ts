@@ -3,14 +3,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { EmpresaModel } from 'src/app/shared/models/empresaModel';
 import { environment } from 'src/environments/environment';
-
-interface ApiResponse {
-  status: boolean;
-  companies: any[];
-  setores: any[];
-  message?: string;
-}
 
 @Component({
   selector: 'app-cadastro-setor',
@@ -27,7 +22,8 @@ export class CadastroSetorComponent {
     private router: Router,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private apiServiceService: ApiServiceService
   ) {
     this.setorForm = this.formBuilder.group({
       empresa: [, Validators.required],
@@ -44,22 +40,17 @@ export class CadastroSetorComponent {
   }
 
   ngOnInit(): void {
-    this.getEmpresas();
-  }
-
-  getEmpresas(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
-      (response) => {
+    this.apiServiceService.getEmpresas().subscribe(
+      response => {
         if (response.status) {
+          console.log('Empresas recuperadas com sucesso:', response.companies);
           this.empresas = response.companies;
-          if (this.empresas.length > 0) {
-            this.setorForm.get('empresa')?.setValue(this.empresas[0].nomeFantasia);
-          }
+          console.log('Empresas no cadastro:', this.empresas);
         } else {
           console.error('Erro ao recuperar empresas:', response.message);
         }
       },
-      (error) => {
+      error => {
         console.error('Erro ao recuperar empresas:', error);
       }
     );
@@ -94,17 +85,10 @@ export class CadastroSetorComponent {
     }
   }
 
-  loadSetores() {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
-      (response) => {
-        if (response.status) {
-          this.setores = response.setores;
-        } else {
-          console.error('Erro ao recuperar setores:', response.message);
-        }
-      },
-      (error) => {
-        console.error('Erro ao recuperar setores:', error);
+  loadSetores(): void {
+    this.apiServiceService.loadSetores().subscribe(
+      setores => {
+        this.setores = setores;
       }
     );
   }

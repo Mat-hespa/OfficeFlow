@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { EmpresaModel } from 'src/app/shared/models/empresaModel';
 import { environment } from 'src/environments/environment';
 
 interface Pessoa {
@@ -30,13 +32,6 @@ interface Pessoa {
   cargoEmprego: string;
 }
 
-interface ApiResponse {
-  status: boolean;
-  companies: any[];
-  message: string;
-  setores: any[];
-}
-
 @Component({
   selector: 'app-edit-usuario',
   templateUrl: './edit-usuario.component.html',
@@ -59,6 +54,7 @@ export class EditUsuarioComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
+    private apiServiceService: ApiServiceService
   ) {
     this.datePickerConfig = Object.assign({}, {
       isAnimated: true,
@@ -92,7 +88,20 @@ export class EditUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmpresas();
+    this.apiServiceService.getEmpresas().subscribe(
+      response => {
+        if (response.status) {
+          console.log('Empresas recuperadas com sucesso:', response.companies);
+          this.empresas = response.companies;
+          console.log('Empresas no cadastro:', this.empresas);
+        } else {
+          console.error('Erro ao recuperar empresas:', response.message);
+        }
+      },
+      error => {
+        console.error('Erro ao recuperar empresas:', error);
+      }
+    );
     this.getPessoaDetails();
     this.loadSetores();
   }
@@ -119,28 +128,10 @@ export class EditUsuarioComponent implements OnInit {
     }
   }
 
-  getEmpresas(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
-      response => {
-        if (response.status) {
-          this.empresas = response.companies;
-        } else {
-          console.error('Erro ao recuperar empresas:', response.message);
-        }
-      },
-      error => {
-        console.error('Erro ao recuperar empresas:', error);
-      }
-    );
-  }
-
   loadSetores(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
-      response => {
-        this.setores = response.setores;
-      },
-      error => {
-        console.error('Erro ao recuperar setores:', error);
+    this.apiServiceService.loadSetores().subscribe(
+      setores => {
+        this.setores = setores;
       }
     );
   }

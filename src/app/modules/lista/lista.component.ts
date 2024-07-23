@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 interface ApiResponse {
   status: boolean;
@@ -57,7 +58,11 @@ export class ListaComponent implements OnInit {
   usuarioLogadoEmail: string = '';
   pessoasNames: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    private apiServiceService: ApiServiceService
+  ) {}
 
   ngOnInit(): void {
     this.loadNomePessoas();
@@ -66,40 +71,24 @@ export class ListaComponent implements OnInit {
 
   loadNomePessoas(): void {
     this.loading = true;
-    this.http.get<ApiResponse>(`${environment.apiUrl}/namePessoas`).subscribe(
-      (response) => {
-        if (response.status) {
-          this.pessoasNames = response.pessoasNames;
-        } else {
-          console.error('Erro ao recuperar empresas:', response.message);
-        }
+    this.apiServiceService.loadNomePessoas().subscribe(
+      pessoasNames => {
+        this.pessoasNames = pessoasNames;
         this.loading = false;
       },
-      (error) => {
-        console.error('Erro ao recuperar empresas:', error);
+      error => {
         this.loading = false;
       }
     );
   }
 
   loadSetores(): void {
-    this.loading = true;
-    this.http.get<ApiResponse>(`${environment.apiUrl}/setores`).subscribe(
-      (response) => {
-        if (response.status) {
-          this.setores = response.setores;
-        } else {
-          console.error('Erro ao recuperar setores:', response.message);
-        }
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Erro ao recuperar setores:', error);
-        this.loading = false;
+    this.apiServiceService.loadSetores().subscribe(
+      setores => {
+        this.setores = setores;
       }
     );
   }
-
   loadPessoas(): void {
     this.loading = true;
     this.http.get<ApiResponse>(`${environment.apiUrl}/pessoas`).subscribe(

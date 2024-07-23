@@ -1,17 +1,12 @@
+import { ApiServiceService } from '../../services/api-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { EmpresaModel } from 'src/app/shared/models/empresaModel';
 import { environment } from 'src/environments/environment';
-
-interface ApiResponse {
-  status: boolean;
-  companies: any[];
-  message: string;
-  setores: any[];
-}
 
 @Component({
   selector: 'app-cadastro-pessoa',
@@ -21,20 +16,20 @@ interface ApiResponse {
 export class CadastroPessoaComponent implements OnInit {
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
 
-
-  @ViewChild ('dropdwon', {static: false}) dropdwon?: ElementRef;
+  @ViewChild('dropdwon', { static: false }) dropdwon?: ElementRef;
   selectedValue?: string;
 
   pessoaForm: FormGroup;
   errorMessage: string = '';
   empresas: any[] = [];
-  setores: any[] = []; 
+  setores: any[] = [];
 
   constructor(
     private router: Router,
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private toast: NgToastService,
+    private apiServiceService: ApiServiceService
   ) {
     this.datePickerConfig = Object.assign({}, {
       isAnimated: true,
@@ -68,14 +63,12 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmpresas();
-  }
-
-  getEmpresas(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
+    this.apiServiceService.getEmpresas().subscribe(
       response => {
         if (response.status) {
+          console.log('Empresas recuperadas com sucesso:', response.companies);
           this.empresas = response.companies;
+          console.log('Empresas no cadastro:', this.empresas);
         } else {
           console.error('Erro ao recuperar empresas:', response.message);
         }
@@ -87,7 +80,7 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   onEmpresaChange(event: any): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/setor/` + event).subscribe(
+    this.http.get<EmpresaModel>(`${environment.apiUrl}/setor/` + event).subscribe(
       response => {
         this.setores = response.setores;
       },
@@ -101,8 +94,7 @@ export class CadastroPessoaComponent implements OnInit {
     if (this.pessoaForm.valid) {
       const companyData = this.pessoaForm.value;
       console.log(companyData)
-      this.http
-        .post(`${environment.apiUrl}/pessoa/create`, companyData)
+      this.http.post(`${environment.apiUrl}/pessoa/create`, companyData)
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Pessoa cadastrada com sucesso' });
@@ -111,13 +103,12 @@ export class CadastroPessoaComponent implements OnInit {
             this.toast.warning({ detail: 'WARNING', summary: 'Erro ao cadastrar pessoa' });
           }
         });
-    }
-    else {
-      this.toast.warning({ detail: 'WARNING', summary: 'Preencha todos os campos'});
+    } else {
+      this.toast.warning({ detail: 'WARNING', summary: 'Preencha todos os campos' });
     }
   }
 
-  returnNameEmpresa(){
+  returnNameEmpresa() {
     return this.dropdwon?.nativeElement.value;
   }
 

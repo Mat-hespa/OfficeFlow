@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/auth/auth.service';
 import { environment } from 'src/environments/environment';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 interface ApiResponse {
   status: boolean;
@@ -19,31 +20,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   empresaCadastrada: boolean = false;
 
-  constructor(private http: HttpClient, public authService: AuthService) {}
+  constructor(
+    private http: HttpClient, 
+    public authService: AuthService,
+    private apiServiceService: ApiServiceService
+  ) {}
 
   ngOnInit(): void {
-    this.getNumeroEmpresas();
+    this.apiServiceService.getNumeroEmpresas().subscribe(
+      numEmpresas => {
+        this.empresaCadastrada = numEmpresas === 1;
+      }
+    );
     this.getCargoUsuario(sessionStorage.getItem('userEmail'));
   }
 
   ngAfterViewInit(): void {
     this.initializeLazyLoading();
-  }
-
-  getNumeroEmpresas(): void {
-    this.http.get<ApiResponse>(`${environment.apiUrl}/companies`).subscribe(
-      response => {
-        if (response.status) {
-          const numEmpresas = response.companies.length;
-          this.empresaCadastrada = numEmpresas === 1; // Habilita ou desabilita o botão com base no número de empresas
-        } else {
-          console.error('Erro ao recuperar empresas:', response.message);
-        }
-      },
-      error => {
-        console.error('Erro ao recuperar empresas:', error);
-      }
-    );
   }
 
   getCargoUsuario(user: any): void {

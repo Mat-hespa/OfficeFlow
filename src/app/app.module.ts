@@ -6,29 +6,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './modules/home/home.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './modules/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgToastModule } from 'ng-angular-popup';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterComponent } from './register/register.component';
-import { HeaderComponent } from './header/header.component';
-import { ChamadosComponent } from './chamados/chamados.component';
-import { CadastroEmpresaComponent } from './cadastro-empresa/cadastro-empresa.component';
-import { CadastroSetorComponent } from './cadastro-setor/cadastro-setor.component';
-import { CadastroPessoaComponent } from './cadastro-pessoa/cadastro-pessoa.component';
+import { RegisterComponent } from './modules/register/register.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { ChamadosComponent } from './modules/chamados/chamados.component';
+import { CadastroEmpresaComponent } from './modules/cadastro-empresa/cadastro-empresa.component';
+import { CadastroSetorComponent } from './modules/cadastro-setor/cadastro-setor.component';
+import { CadastroPessoaComponent } from './modules/cadastro-pessoa/cadastro-pessoa.component';
 import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { ListaComponent } from './lista/lista.component';
-import { PerfilComponent } from './perfil/perfil.component';
-import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
+import { ListaComponent } from './modules/lista/lista.component';
+import { PerfilComponent } from './modules/perfil/perfil.component';
+import { EditUsuarioComponent } from './modules/edit-usuario/edit-usuario.component';
 import { NumericOnlyDirective } from './directives/numeric-only.directive';
-import { EditSetorComponent } from './edit-setor/edit-setor.component';
-import { SetorTreeComponent } from './setor-tree/setor-tree.component';
-import { CadastroDocumentoComponent } from './cadastro-documento/cadastro-documento.component';
-import { RecadosComponent } from './cadastro-recados/cadastro-recados.component';
-import { InboxComponent } from './inbox/inbox.component';
+import { EditSetorComponent } from './modules/edit-setor/edit-setor.component';
+import { SetorTreeComponent } from './modules/setor-tree/setor-tree.component';
+import { CadastroDocumentoComponent } from './modules/cadastro-documento/cadastro-documento.component';
+import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.component';
+import { InboxComponent } from './modules/inbox/inbox.component';
 
 
 
