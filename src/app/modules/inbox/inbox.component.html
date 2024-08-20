@@ -27,8 +27,21 @@
                     <p style="color: #171a4a"><strong>Descrição:</strong> {{ document.description }}</p>
                     <p style="color: #171a4a"><strong>Arquivo:</strong> {{ document.fileUrl.split('/').pop() }}</p>
                     <div class="button-group mt-2">
+                      <div class="btn-group" role="group" style="padding-right: 10px;">
+                        <button type="button" class="btn btn-primary dropdown-toggle" style="background-color: #171a4a; border: 0;" data-bs-toggle="dropdown" aria-expanded="false">
+                          Atualizar status
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" (click)="openForwardModal(document, 'document')">Encaminhar</a></li>
+                          <li><a class="dropdown-item" (click)="updateDocumentStatus(document._id, 'finalizado')">Finalizar</a></li>
+                          <!-- <button class="btn btn-warning" (click)="openForwardModal(recado, 'recado')">Encaminhar</button>
+                          <button class="btn btn-danger" style="margin-left: 10px;" (click)="updateRecadoStatus(recado._id, 'finalizado')">Finalizar</button> -->
+                        </ul>
+                      </div>
                       <a [href]="document.fileUrl" target="_blank" class="btn btn-secondary" style="background-color: #171a4a; border-color: #171a4a">Download</a>
                       <button *ngIf="!document.read" class="btn btn-primary" style="margin-left: 10px;" (click)="markDocumentAsRead(document._id)">Marcar como lido</button>
+                      <!-- <button class="btn btn-warning" style="margin-left: 10px;" (click)="openForwardModal(document, 'document')">Encaminhar</button>
+                      <button class="btn btn-danger" style="margin-left: 10px;" (click)="updateDocumentStatus(document._id, 'finalizado')">Finalizar</button> -->
                     </div>
                   </div>
                 </div>
@@ -44,7 +57,18 @@
                     <p style="color: #171a4a"><strong>Mensagem:</strong> {{ recado.mensagem }}</p>
                     <p style="color: #171a4a"><strong>Para:</strong> {{ recado.emailDestinatario }}</p>
                     <div class="button-group mt-2">
-                      <button *ngIf="!recado.read" class="btn btn-primary" (click)="markRecadoAsRead(recado._id)">Marcar como lido</button>
+                      <div class="btn-group" role="group" style="padding-right: 10px;">
+                        <button type="button" class="btn btn-primary dropdown-toggle" style="background-color: #171a4a; border: 0;" data-bs-toggle="dropdown" aria-expanded="false">
+                          Atualizar status
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item"(click)="openForwardModal(recado, 'recado')" >Encaminhar</a></li>
+                          <li><a class="dropdown-item" (click)="updateRecadoStatus(recado._id, 'finalizado')">Finalizar</a></li>
+                          <!-- <button class="btn btn-warning" (click)="openForwardModal(recado, 'recado')">Encaminhar</button>
+                          <button class="btn btn-danger" style="margin-left: 10px;" (click)="updateRecadoStatus(recado._id, 'finalizado')">Finalizar</button> -->
+                        </ul>
+                      </div>
+                      <button *ngIf="!recado.read" class="btn btn-primary" (click)="markRecadoAsRead(recado._id)" style="background-color: #171a4a; border: 0;" >Marcar como lido</button>
                     </div>
                   </div>
                 </div>
@@ -56,3 +80,29 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for forwarding -->
+<ng-template #forwardModal let-modal>
+  <div class="modal-header" style="background-color: #171a4a;">
+    <h5 class="modal-title" style="color: #eed1b5;">Encaminhar {{ selectedType === 'document' ? 'Documento' : 'Recado' }}</h5>
+  </div>
+  <div class="modal-body" style="background-color: #171a4a; border-top: none;">
+    <form>
+      <div class="form-group" style="padding-bottom: 15px;">
+        <label for="newRegistrantEmail" style="color: #eed1b5; padding-bottom: 10px;">Email do remetente</label>
+        <input type="email" class="form-control" id="newRegistrantEmail" [(ngModel)]="newRegistrantEmail" name="newRegistrantEmail" style="border-color: #eed1b5; color: black;" required>
+      </div>
+      <div class="form-group">
+        <label for="recipientEmail" style="color: #eed1b5; padding-bottom: 10px;">Email do destinatário</label>
+        <select class="form-control" id="recipientEmail" [(ngModel)]="recipientEmail" name="recipientEmail" style="border-color: #eed1b5; color: black;" required>
+          <option value="" disabled selected style="color: #000;">Selecione um destinatário</option>
+          <option *ngFor="let email of emails" [value]="email" style="color: #000;">{{ email }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer" style="background-color: #171a4a; border-top: none;">
+    <button type="button" class="btn btn-secondary" style="background-color: #eed1b5; border-color: #eed1b5; color: #171a4a;" (click)="modal.dismiss()">Fechar</button>
+    <button type="button" class="btn btn-primary" style="background-color: #eed1b5; border-color: #eed1b5; color: #171a4a;" (click)="forwardItem(newRegistrantEmail, recipientEmail); modal.close()">Encaminhar</button>
+  </div>
+</ng-template>
