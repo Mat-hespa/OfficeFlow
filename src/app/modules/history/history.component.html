@@ -1,0 +1,16 @@
+<div *ngIf="history?.length" class="history-container">
+  <h6 (click)="toggleHistory()" class="clickable-header">
+    Histórico de Status
+    <i [ngClass]="isOpen ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'" class="toggle-icon"></i>
+  </h6>
+  <div *ngIf="isOpen">
+    <ul>
+      <li *ngFor="let entry of history">
+        {{ entry.status }} - por <strong>{{ entry.updatedBy }}</strong> 
+        <span class="timestamp"> {{ entry.updatedAt | date: 'short' }}</span>
+        <br>
+        <span *ngIf="entry.comment">Comentário: {{ entry.comment }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

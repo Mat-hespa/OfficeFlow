@@ -30,25 +30,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
   checkForNewNotifications(): void {
     const recipientEmail = sessionStorage.getItem('userEmail');
     if (recipientEmail) {
-      // Reset notifications count before fetching new counts
-      this.newNotificationsCount = 0;
+      // Inicialize um contador temporário
+      let tempNotificationsCount = 0;
 
+      // Verifique recados não lidos
       this.http.get(`${environment.apiUrl}/recados/${recipientEmail}/unread-count`).subscribe(
         (response: any) => {
-          this.newNotificationsCount += response.unreadCount;
+          tempNotificationsCount += response.unreadCount;
+
+          // Verifique documentos não lidos
+          this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}/unread`).subscribe(
+            (response: any) => {
+              tempNotificationsCount += response.unreadCount;
+              this.newNotificationsCount = tempNotificationsCount; // Atualize o contador de notificações
+              console.log(recipientEmail)
+              console.log('Novos documentos nao lidos:', this.newNotificationsCount);
+            },
+            (error) => {
+              console.error('Erro ao verificar novos documentos:', error);
+            }
+          );
         },
         (error) => {
           console.error('Erro ao verificar novos recados.', error);
-        }
-      );
-
-      this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}/unread`).subscribe(
-        (response: any) => {
-          console.log('Novos documentos:', response);
-          this.newNotificationsCount += response.unreadCount;
-        },
-        (error) => {
-          console.error('Erro ao verificar novos documentos:', error);
         }
       );
     }

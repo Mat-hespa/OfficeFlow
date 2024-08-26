@@ -19,6 +19,7 @@ export class InboxComponent implements OnInit {
   newRegistrantEmail: string = sessionStorage.getItem('userEmail') || '';
   recipientEmail: string = '';
   emails: string[] = [];
+  comment = '';
 
   @ViewChild('forwardModal') forwardModal: TemplateRef<any> | undefined;
 
@@ -77,15 +78,20 @@ export class InboxComponent implements OnInit {
   }
 
   markDocumentAsRead(documentId: string) {
-    this.http.patch(`${environment.apiUrl}/documentos/${documentId}/read`, {}).subscribe(
-      (response: any) => {
-        this.toast.success({ detail: 'SUCCESS', summary: 'Documento marcado como lido.' });
-        this.loadDocuments();
-      },
-      (error) => {
-        this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar documento como lido.' });
-      }
-    );
+    const recipientEmail = sessionStorage.getItem('userEmail');
+    if (recipientEmail) {
+      this.http.post(`${environment.apiUrl}/documentos/${documentId}/read`, { recipientEmail }).subscribe(
+        (response: any) => {
+          this.toast.success({ detail: 'SUCCESS', summary: 'Documento marcado como lido.' });
+          this.loadDocuments();
+        },
+        (error) => {
+          this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar documento como lido.' });
+        }
+      );
+    } else {
+      this.toast.error({ detail: 'ERROR', summary: 'Email do destinatário não encontrado.' });
+    }
   }
 
   markRecadoAsRead(recadoId: string) {
@@ -106,9 +112,14 @@ export class InboxComponent implements OnInit {
     this.modalService.open(this.forwardModal);
   }
 
-  forwardItem(newRegistrantEmail: string, recipientEmail: string) {
+  forwardItem(newRegistrantEmail: string, recipientEmail: string, comment: string) {
     if (this.selectedType === 'document') {
-      this.http.post(`${environment.apiUrl}/documentos/forward`, { documentId: this.selectedDocument._id, newRegistrant: newRegistrantEmail, newRecipient: recipientEmail }).subscribe(
+      this.http.post(`${environment.apiUrl}/documentos/forward`, { 
+        documentId: this.selectedDocument._id, 
+        newRegistrant: newRegistrantEmail, 
+        newRecipient: recipientEmail,
+        comment: comment // Passa o comentário aqui
+      }).subscribe(
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Documento encaminhado com sucesso.' });
           this.loadDocuments();

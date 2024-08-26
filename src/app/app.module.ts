@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Importe o FormsModule
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ import { SetorTreeComponent } from './modules/setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './modules/cadastro-documento/cadastro-documento.component';
 import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.component';
 import { InboxComponent } from './modules/inbox/inbox.component';
+import { HistoryComponent } from './modules/history/history.component';
 
 
 
@@ -51,7 +53,8 @@ import { InboxComponent } from './modules/inbox/inbox.component';
     SetorTreeComponent,
     CadastroDocumentoComponent,
     RecadosComponent,
-    InboxComponent
+    InboxComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { InboxComponent } from './modules/inbox/inbox.component';
     NgToastModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgbModule
   ],
   providers: [BsDatepickerConfig],
   bootstrap: [AppComponent]
