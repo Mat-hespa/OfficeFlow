@@ -28,7 +28,7 @@
                     <p style="color: #171a4a"><strong>Arquivo:</strong> {{ document.fileUrl.split('/').pop() }}</p>
                     <div class="button-group mt-2">
                       <div class="btn-group" role="group" style="padding-right: 10px;">
-                        <button type="button" class="btn btn-primary dropdown-toggle" style="background-color: #171a4a; border: 0;" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button *ngIf="document.status !== 'finalizado'" type="button" class="btn btn-primary dropdown-toggle" style="background-color: #171a4a; border: 0;" data-bs-toggle="dropdown" aria-expanded="false">
                           Atualizar status
                         </button>
                         <ul class="dropdown-menu">
@@ -39,7 +39,7 @@
                         </ul>
                       </div>
                       <a [href]="document.fileUrl" target="_blank" class="btn btn-secondary" style="background-color: #171a4a; border-color: #171a4a">Download</a>
-                      <button *ngIf="!document.read" class="btn btn-primary" style="margin-left: 10px;" (click)="markDocumentAsRead(document._id)">Marcar como lido</button>
+                      <button *ngIf="shouldShowMarkAsReadButton(document)" class="btn btn-primary" style="margin-left: 10px;" (click)="markDocumentAsRead(document._id)">Marcar como lido</button>
                       <!-- <button class="btn btn-warning" style="margin-left: 10px;" (click)="openForwardModal(document, 'document')">Encaminhar</button>
                       <button class="btn btn-danger" style="margin-left: 10px;" (click)="updateDocumentStatus(document._id, 'finalizado')">Finalizar</button> -->
                     </div>

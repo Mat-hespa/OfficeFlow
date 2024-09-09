@@ -94,6 +94,15 @@ export class InboxComponent implements OnInit {
     }
   }
 
+  shouldShowMarkAsReadButton(document: any): boolean {
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (!userEmail) return false;
+  
+    const readByUser = document.readBy.find((entry: any) => entry.recipient === userEmail);
+    
+    return readByUser ? !readByUser.read : false;
+  }  
+
   markRecadoAsRead(recadoId: string) {
     this.http.patch(`${environment.apiUrl}/recados/${recadoId}/read`, {}).subscribe(
       (response: any) => {

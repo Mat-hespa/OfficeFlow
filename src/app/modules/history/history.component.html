@@ -7,7 +7,7 @@
     <ul>
       <li *ngFor="let entry of history">
         {{ entry.status }} - por <strong>{{ entry.updatedBy }}</strong> 
-        <span class="timestamp"> {{ entry.updatedAt | date: 'short' }}</span>
+        <span class="timestamp">, {{ entry.updatedAt | date: 'short' }}</span>
         <br>
         <span *ngIf="entry.comment">Comentário: {{ entry.comment }}</span>
       </li>
