@@ -16,7 +16,6 @@ import { NgToastModule } from 'ng-angular-popup';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './modules/register/register.component';
 import { HeaderComponent } from './modules/header/header.component';
-import { ChamadosComponent } from './modules/chamados/chamados.component';
 import { CadastroEmpresaComponent } from './modules/cadastro-empresa/cadastro-empresa.component';
 import { CadastroSetorComponent } from './modules/cadastro-setor/cadastro-setor.component';
 import { CadastroPessoaComponent } from './modules/cadastro-pessoa/cadastro-pessoa.component';
@@ -31,6 +30,8 @@ import { CadastroDocumentoComponent } from './modules/cadastro-documento/cadastr
 import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.component';
 import { InboxComponent } from './modules/inbox/inbox.component';
 import { HistoryComponent } from './modules/history/history.component';
+import { CadastroChamadoComponent } from './modules/cadastro-chamado/cadastro-chamado.component';
+import { ListaChamadosComponent } from './modules/lista-chamados/lista-chamados.component';
 
 
 
@@ -41,7 +42,6 @@ import { HistoryComponent } from './modules/history/history.component';
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
-    ChamadosComponent,
     CadastroEmpresaComponent,
     CadastroSetorComponent,
     CadastroPessoaComponent,
@@ -55,6 +55,8 @@ import { HistoryComponent } from './modules/history/history.component';
     RecadosComponent,
     InboxComponent,
     HistoryComponent,
+    CadastroChamadoComponent,
+    ListaChamadosComponent,
   ],
   imports: [
     BrowserModule,

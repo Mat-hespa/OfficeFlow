@@ -19,8 +19,9 @@ interface Pessoa {
 export class CadastroDocumentoComponent implements OnInit {
   documentForm: FormGroup;
   selectedFile: File | null = null;
-  pessoasNames: Pessoa[] = [];
+  pessoasNames: any[] = [];
   loading: boolean = false;
+  setores: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -38,19 +39,32 @@ export class CadastroDocumentoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadNomePessoas();
+    this.getSetores();
   }
 
-  loadNomePessoas(): void {
-    this.loading = true;
-    this.apiServiceService.loadNomePessoas().subscribe(
-      (pessoasNames: Pessoa[]) => {
-        this.pessoasNames = pessoasNames;
-        console.log('Pessoas:', this.pessoasNames);
-        this.loading = false;
+  getSetores(): void {
+    this.http.get(`${environment.apiUrl}/setores`).subscribe(
+      (response: any) => {
+        this.setores = response.setores;
+        console.log(this.setores)
       },
-      error => {
-        this.loading = false;
+      (error) => {
+        console.error('Erro ao buscar setores:', error);
+      }
+    );
+  }
+
+  onSetorChange(event: any): void {
+    const setorNome = event.target.value;
+    console.log(setorNome)
+    // Chamar o serviço para buscar pessoas pelo nome do setor
+    this.http.get(`${environment.apiUrl}/pessoa/api/${setorNome}`).subscribe(
+      (response: any) => {
+        this.pessoasNames = response.pessoas;
+        console.log(this.pessoasNames)
+      },
+      (error) => {
+        console.error('Erro ao buscar pessoas:', error);
       }
     );
   }

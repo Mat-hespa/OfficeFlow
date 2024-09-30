@@ -15,6 +15,8 @@ import { SetorTreeComponent } from './modules/setor-tree/setor-tree.component';
 import { CadastroDocumentoComponent } from './modules/cadastro-documento/cadastro-documento.component';
 import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.component';
 import { InboxComponent } from './modules/inbox/inbox.component';
+import { CadastroChamadoComponent } from './modules/cadastro-chamado/cadastro-chamado.component';
+import { ListaChamadosComponent } from './modules/lista-chamados/lista-chamados.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,6 +34,9 @@ const routes: Routes = [
   { path: 'cadastroDocumento', component: CadastroDocumentoComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'cadastroRecados', component: RecadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'inbox', component: InboxComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'chamadoTI', component: CadastroChamadoComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'listaChamados', component: ListaChamadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+
 ];
 
 @NgModule({

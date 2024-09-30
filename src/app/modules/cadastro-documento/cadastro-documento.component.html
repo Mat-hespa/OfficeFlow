@@ -11,16 +11,31 @@
             <!-- Campo Usuário de Envio -->
             <div class="col-md-6">
               <label for="registrant" class="form-label" style="color: #171a4a">Usuário de envio</label>
-              <input type="text" formControlName="registrant" class="form-control border border-2" id="registrant" style="background-color: rgba(255, 255, 255, 0.611)" />
+              <input type="text" formControlName="registrant" class="form-control border border-2" id="registrant" 
+                style="background-color: rgba(255, 255, 255, 0.611)" />
               <div *ngIf="documentForm.get('registrant')?.invalid && documentForm.get('registrant')?.touched" class="text-danger">
                 Este campo é obrigatório.
               </div>
             </div>
-   
-            <!-- Campo Destinatário -->
+
+            <!-- Select para selecionar o Setor -->
+            <div class="col-md-6">
+              <label for="setor" class="form-label" style="color: #171a4a">Setor</label>
+              <select formControlName="setor" class="form-control border border-2" id="setor" (change)="onSetorChange($event)" 
+                style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione um setor</option>
+                <option *ngFor="let setor of setores" [value]="setor.nomeSetor">{{ setor.nomeSetor }}</option>
+              </select>
+              <div *ngIf="documentForm.get('setor')?.invalid && documentForm.get('setor')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Select para selecionar o Destinatário -->
             <div class="col-md-6">
               <label for="recipient" class="form-label" style="color: #171a4a">Destinatário</label>
-              <select formControlName="recipient" class="form-control border border-2" id="recipient" style="background-color: rgba(255, 255, 255, 0.611)">
+              <select formControlName="recipient" class="form-control border border-2" id="recipient" 
+                style="background-color: rgba(255, 255, 255, 0.611)">
                 <option value="" disabled selected>Selecione um destinatário</option>
                 <option *ngFor="let pessoa of pessoasNames" [value]="pessoa.email">{{ pessoa.email }}</option>
               </select>
@@ -29,24 +44,29 @@
               </div>
             </div>
 
-            <!-- Campo de Upload de Arquivo -->
-            <div class="col-md-12">
+            <!-- Upload de Arquivo -->
+            <div class="col-md-6">
               <label for="documentFile" class="form-label" style="color: #171a4a">Arquivo do Documento</label>
-              <input formControlName="documentFile" type="file" (change)="onFileSelected($event)" class="form-control border border-2" id="documentFile" style="background-color: rgba(255, 255, 255, 0.611)" />
+              <input formControlName="documentFile" type="file" (change)="onFileSelected($event)" 
+                class="form-control border border-2" id="documentFile" 
+                style="background-color: rgba(255, 255, 255, 0.611)" />
               <div *ngIf="documentForm.get('documentFile')?.invalid && documentForm.get('documentFile')?.touched" class="text-danger">
                 Este campo é obrigatório.
               </div>
             </div>
 
-            <!-- Campo Descrição do Documento -->
+            <!-- Campo de Descrição -->
             <div class="col-md-12">
               <label for="description" class="form-label" style="color: #171a4a">Descrição do Documento</label>
-              <textarea formControlName="description" class="form-control border border-2" id="description" style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
+              <textarea formControlName="description" class="form-control border border-2" id="description" 
+                style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
             </div>
 
-            <!-- Botão de Envio -->
+            <!-- Botão de Enviar -->
             <div class="col-12 mt-4">
-              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">Cadastrar</button>
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">
+                Cadastrar
+              </button>
             </div>
           </form>
         </div>

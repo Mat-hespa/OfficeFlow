@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+<div class="container mt-5" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center vh-100 bg-mobile">
+    <div class="col-md-12 mt-3 mb-5">
+      <div class="card mt-2" style="background-color: #eed1b5">
+        <div class="card-body">
+          <form class="row g-3" [formGroup]="chamadoForm" (ngSubmit)="registerChamado()">
+            <h5 class="mb-0 mt-4" style="font-weight: bold">Cadastro de Chamado de TI</h5>
+
+            <!-- Campo Solicitante -->
+            <div class="col-md-6">
+              <label for="solicitante" class="form-label" style="color: #171a4a">Solicitante</label>
+              <input type="text" formControlName="solicitante" class="form-control border border-2" id="solicitante"
+                style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="chamadoForm.get('solicitante')?.invalid && chamadoForm.get('solicitante')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Título -->
+            <div class="col-md-6">
+              <label for="titulo" class="form-label" style="color: #171a4a">Título</label>
+              <input type="text" formControlName="titulo" class="form-control border border-2" id="titulo"
+                style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="chamadoForm.get('titulo')?.invalid && chamadoForm.get('titulo')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Ocorrência -->
+            <div class="col-md-12">
+              <label for="ocorrencia" class="form-label" style="color: #171a4a">Ocorrência</label>
+              <textarea formControlName="ocorrencia" class="form-control border border-2" id="ocorrencia"
+                style="background-color: rgba(255, 255, 255, 0.611); min-height: 100px;"></textarea>
+              <div *ngIf="chamadoForm.get('ocorrencia')?.invalid && chamadoForm.get('ocorrencia')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Descrição -->
+            <div class="col-md-12">
+              <label for="descricao" class="form-label" style="color: #171a4a">Descrição</label>
+              <textarea formControlName="descricao" class="form-control border border-2" id="descricao"
+                style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
+            </div>
+
+            <!-- Select para Prioridade -->
+            <div class="col-md-6">
+              <label for="prioridade" class="form-label" style="color: #171a4a">Prioridade</label>
+              <select formControlName="prioridade" class="form-control border border-2" id="prioridade"
+                style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione a prioridade</option>
+                <option *ngFor="let prioridade of prioridades" [value]="prioridade">{{ prioridade }}</option>
+              </select>
+              <div *ngIf="chamadoForm.get('prioridade')?.invalid && chamadoForm.get('prioridade')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Upload de Anexos -->
+            <div class="col-md-6">
+              <label for="anexos" class="form-label" style="color: #171a4a">Anexos</label>
+              <input formControlName="anexos" type="file" (change)="onFileSelected($event)"
+                class="form-control border border-2" id="anexos" multiple
+                style="background-color: rgba(255, 255, 255, 0.611)" />
+              <div *ngIf="chamadoForm.get('anexos')?.invalid && chamadoForm.get('anexos')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">
+                Cadastrar Chamado
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

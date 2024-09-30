@@ -20,6 +20,10 @@ export class InboxComponent implements OnInit {
   recipientEmail: string = '';
   emails: string[] = [];
   comment = '';
+  pessoasNames: any[] = [];
+  setores: any[] = [];
+  selectedSetor: string = '';
+
 
   @ViewChild('forwardModal') forwardModal: TemplateRef<any> | undefined;
 
@@ -35,6 +39,30 @@ export class InboxComponent implements OnInit {
     this.loadDocuments();
     this.loadRecados();
     this.loadNomePessoas();
+    this.getSetores();
+  }
+
+  getSetores(): void {
+    this.http.get(`${environment.apiUrl}/setores`).subscribe(
+      (response: any) => {
+        this.setores = response.setores;
+      },
+      (error) => {
+        console.error('Erro ao buscar setores:', error);
+      }
+    );
+  }
+
+  onSetorChange(event: any): void {
+    const setorNome = event.target.value;
+    this.http.get(`${environment.apiUrl}/pessoa/api/${setorNome}`).subscribe(
+      (response: any) => {
+        this.pessoasNames = response.pessoas;
+      },
+      (error) => {
+        console.error('Erro ao buscar pessoas pelo setor:', error);
+      }
+    );
   }
 
   loadDocuments() {

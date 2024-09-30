@@ -89,17 +89,25 @@
   </div>
   <div class="modal-body" style="background-color: #171a4a; border-top: none;">
     <form>
+      <!-- Campo Setor -->
       <div class="form-group" style="padding-bottom: 15px;">
-        <label for="newRegistrantEmail" style="color: #eed1b5; padding-bottom: 10px;">Email do remetente</label>
-        <input type="email" class="form-control" id="newRegistrantEmail" [(ngModel)]="newRegistrantEmail" name="newRegistrantEmail" style="border-color: #eed1b5; color: black;" required readonly>
-      </div>
-      <div class="form-group" style="padding-bottom: 15px;">
-        <label for="recipientEmail" style="color: #eed1b5; padding-bottom: 10px;">Email do destinatário</label>
-        <select class="form-control" id="recipientEmail" [(ngModel)]="recipientEmail" name="recipientEmail" style="border-color: #eed1b5; color: black;" required>
-          <option value="" disabled selected style="color: #000;">Selecione um destinatário</option>
-          <option *ngFor="let email of emails" [value]="email" style="color: #000;">{{ email }}</option>
+        <label for="setor" style="color: #eed1b5; padding-bottom: 10px;">Setor</label>
+        <select class="form-control" id="setor" [(ngModel)]="selectedSetor" name="setor" style="border-color: #eed1b5; color: black;" (change)="onSetorChange($event)" required>
+          <option value="" disabled selected style="color: #000;">Selecione um setor</option>
+          <option *ngFor="let setor of setores" [value]="setor.nomeSetor">{{ setor.nomeSetor }}</option>
         </select>
       </div>
+
+      <!-- Campo Destinatário -->
+      <div class="form-group" style="padding-bottom: 15px;">
+        <label for="recipientEmail" style="color: #eed1b5; padding-bottom: 10px;">Destinatário</label>
+        <select class="form-control" id="recipientEmail" [(ngModel)]="recipientEmail" name="recipientEmail" style="border-color: #eed1b5; color: black;" required>
+          <option value="" disabled selected style="color: #000;">Selecione um destinatário</option>
+          <option *ngFor="let pessoa of pessoasNames" [value]="pessoa.email">{{ pessoa.email }}</option>
+        </select>
+      </div>
+
+      <!-- Comentário -->
       <div class="form-group">
         <label for="comment" style="color: #eed1b5; padding-bottom: 10px;">Descrição/Comentário</label>
         <input type="text" class="form-control" id="comment" [(ngModel)]="comment" name="comment" style="border-color: #eed1b5; color: black;" required>

@@ -1,0 +1,227 @@
+.container {
+  background-color: #171a4a;
+  padding: 20px;
+  color: #eed1b5;
+}
+
+.page-title {
+  color: rgba(255, 255, 255, 0.611);
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  color: #eed1b5;
+  margin-top: 40px;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinha os títulos à esquerda */
+  padding-bottom: 20px;
+}
+
+.section-title i {
+  margin-right: 10px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* Aumenta o espaçamento entre os cards */
+  justify-content: center; /* Centraliza os cards */
+}
+
+.card {
+  background-color: #eed1b5;
+  border: 1px solid #171a4a;
+  padding: 15px;
+  border-radius: 5px;
+  width: calc(33% - 20px);
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border 0.3s ease;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+  .card {
+      width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+      width: 100%;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h3 {
+  color: #171a4a;
+}
+
+.card.aberto {
+  border-left: 5px solid #ffcccb;
+}
+
+.card.processo {
+  background-color: #d1e3ee;
+  border-left: 5px solid #f0ad4e;
+}
+
+.card.fechado {
+  background-color: #cceedd;
+  border-left: 5px solid #5cb85c;
+}
+
+.historico-dropdown button {
+  background-color: #171a4a;
+  color: #eed1b5;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.historico-dropdown button:hover {
+  background-color: rgba(23, 26, 74, 0.8);
+}
+
+.historico {
+  margin-top: 10px;
+  background-color: rgba(23, 26, 74, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.comentario {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.611); /* Cor ajustada */
+  border-radius: 5px;
+}
+
+.status-historico {
+  display: block;
+  font-style: italic;
+  color: #171a4a;
+}
+
+button {
+  margin-top: 10px;
+  background-color: #171a4a;
+  color: #eed1b5;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgba(23, 26, 74, 0.8);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que a modal fique acima de outros elementos */
+}
+
+.modal-content {
+  background-color: #eed1b5; /* Cor de fundo da modal */
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #171a4a;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 15px;
+  color: #171a4a;
+}
+
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.611); /* Cor ajustada */
+}
+
+.modal-content button {
+    margin-top: 20px;
+    background-color: #171a4a;
+    color: #eed1b5; /* Cor do texto ajustada */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.modal-content textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.modal-content button:hover {
+  background-color: rgba(23, 26, 74, 0.8);
+}
+
+.modal-content .button-group {
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-content .button-group button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.modal-content .button-group button:first-child {
+  margin-left: 0;
+}
+
+.modal-content .button-group button:last-child {
+  margin-right: 0;
+}
