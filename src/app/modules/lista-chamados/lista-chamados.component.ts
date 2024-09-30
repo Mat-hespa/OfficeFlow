@@ -14,15 +14,22 @@ export class ListaChamadosComponent implements OnInit {
   chamadosFinalizados: any[] = [];
   selectedChamado: any = null;
   novoComentario: string = '';
+  userRole: string | null;
+  userEmail: string | null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.userRole = sessionStorage.getItem('userRole');
+    this.userEmail = sessionStorage.getItem('userEmail');
+  }
 
   ngOnInit(): void {
     this.getChamados();
   }
 
   getChamados() {
-    this.http.get(`${environment.apiUrl}/api/chamados`).subscribe(
+    this.http.get(`${environment.apiUrl}/api/chamados`, {
+      params: { userRole: this.userRole ?? '', userEmail: this.userEmail ?? '' }
+    }).subscribe(
       (data: any) => {
         this.chamados = data;
         this.filterChamados();
@@ -65,15 +72,16 @@ export class ListaChamadosComponent implements OnInit {
         updatedBy: this.getEmailUsuarioLogado(), // Captura o email do usuário logado
         comment: this.novoComentario
       };
-  
+
       // Adiciona o novo comentário ao histórico
       this.selectedChamado.history.push(novoHistorico);
-  
+
       // Faz a requisição PUT para atualizar o chamado no backend
       this.http.put(`${environment.apiUrl}/api/chamados/${this.selectedChamado._id}`, {
         status: this.selectedChamado.status,
         comment: this.novoComentario,
-        updatedBy: this.getEmailUsuarioLogado() // Envia o usuário logado
+        updatedBy: this.getEmailUsuarioLogado(), // Envia o usuário logado
+        userRole: this.userRole // Envia o userRole
       }).subscribe(
         (response) => {
           console.log('Chamado atualizado com sucesso', response);

@@ -21,8 +21,11 @@
             <!-- Campo Título -->
             <div class="col-md-6">
               <label for="titulo" class="form-label" style="color: #171a4a">Título</label>
-              <input type="text" formControlName="titulo" class="form-control border border-2" id="titulo"
-                style="background-color: rgba(255, 255, 255, 0.611)" />
+              <select formControlName="titulo" class="form-control border border-2" id="titulo"
+                style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione um título</option>
+                <option *ngFor="let titulo of titulos" [value]="titulo">{{ titulo }}</option>
+              </select>
               <div *ngIf="chamadoForm.get('titulo')?.invalid && chamadoForm.get('titulo')?.touched" class="text-danger">
                 Este campo é obrigatório.
               </div>
@@ -43,19 +46,6 @@
               <label for="descricao" class="form-label" style="color: #171a4a">Descrição</label>
               <textarea formControlName="descricao" class="form-control border border-2" id="descricao"
                 style="background-color: rgba(255, 255, 255, 0.611); min-height: 150px;"></textarea>
-            </div>
-
-            <!-- Select para Prioridade -->
-            <div class="col-md-6">
-              <label for="prioridade" class="form-label" style="color: #171a4a">Prioridade</label>
-              <select formControlName="prioridade" class="form-control border border-2" id="prioridade"
-                style="background-color: rgba(255, 255, 255, 0.611)">
-                <option value="" disabled selected>Selecione a prioridade</option>
-                <option *ngFor="let prioridade of prioridades" [value]="prioridade">{{ prioridade }}</option>
-              </select>
-              <div *ngIf="chamadoForm.get('prioridade')?.invalid && chamadoForm.get('prioridade')?.touched" class="text-danger">
-                Este campo é obrigatório.
-              </div>
             </div>
 
             <!-- Upload de Anexos -->

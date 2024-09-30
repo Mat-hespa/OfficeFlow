@@ -13,65 +13,65 @@ import { NgToastService } from 'ng-angular-popup';
 export class CadastroChamadoComponent implements OnInit {
   chamadoForm: FormGroup;
   selectedFiles: File[] = [];
-  prioridades: string[] = ['Baixa', 'Média', 'Alta'];  // Adicionando as prioridades
+  titulos: string[] = ['Erro de Conexão', 'Computador Lento', 'Tela Azul', 'Erro de Impressora', 'Problema de Rede'];
+  tituloPrioridadeMap: { [key: string]: string } = {
+    'Erro de Conexão': 'Alta',
+    'Computador Lento': 'Média',
+    'Tela Azul': 'Alta',
+    'Erro de Impressora': 'Baixa',
+    'Problema de Rede': 'Alta'
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private toast: NgToastService, 
+    private toast: NgToastService,
   ) {
-    // Inicializando o formulário reativo com validações
     this.chamadoForm = this.formBuilder.group({
       solicitante: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
       titulo: ['', Validators.required],
       ocorrencia: ['', Validators.required],
       descricao: ['', Validators.required],
-      prioridade: ['', Validators.required],
-      anexos: ['', Validators.required] // Validação dos anexos pode ser feita de forma adicional se necessário
+      anexos: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {}
 
-  // Tratamento para anexar arquivos selecionados
   onFileSelected(event: any) {
-    this.selectedFiles = Array.from(event.target.files);  // Convertendo para array de arquivos
+    this.selectedFiles = Array.from(event.target.files);
   }
 
-  // Envio do formulário
   registerChamado() {
     if (this.chamadoForm.valid) {
       const formData = new FormData();
 
-      // Adicionando dados do formulário ao FormData
+      const titulo = this.chamadoForm.get('titulo')?.value;
+      const prioridade = this.tituloPrioridadeMap[titulo];
+
       formData.append('solicitante', this.chamadoForm.get('solicitante')?.value);
-      formData.append('titulo', this.chamadoForm.get('titulo')?.value);
+      formData.append('titulo', titulo);
       formData.append('ocorrencia', this.chamadoForm.get('ocorrencia')?.value);
       formData.append('descricao', this.chamadoForm.get('descricao')?.value);
-      formData.append('prioridade', this.chamadoForm.get('prioridade')?.value);
+      formData.append('prioridade', prioridade);
 
-      // Adicionando os arquivos anexos ao FormData
       for (const file of this.selectedFiles) {
-        formData.append('anexos', file);  // "anexos" é o nome esperado no backend
+        formData.append('anexos', file);
       }
 
-      // Envio do formulário para a API
       this.http.post(`${environment.apiUrl}/api/chamados`, formData).subscribe(
         response => {
           console.log('Chamado criado com sucesso', response);
           this.toast.success({ detail: 'SUCCESS', summary: 'Chamado de TI cadastrado com sucesso.' });
-          this.router.navigateByUrl('/home');  // Redireciona após sucesso
+          this.router.navigateByUrl('/home');
         },
         error => {
           console.error('Erro ao criar o chamado:', error);
         }
       );
     } else {
-      // Marcar todos os campos como tocados para exibir mensagens de erro
-      // this.chamadoForm.markAllAsTouched();
       this.toast.warning({ detail: 'WARNING', summary: 'Preencha todos os campos corretamente.' });
-
     }
   }
 }
