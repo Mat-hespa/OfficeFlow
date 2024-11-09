@@ -66,4 +66,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   openPerfil(): void {
     this.router.navigateByUrl('/perfil');
   }
+
+  openChamado(): void {
+    this.router.navigateByUrl('/listaChamados');
+  }
 }

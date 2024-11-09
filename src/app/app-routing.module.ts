@@ -17,6 +17,7 @@ import { RecadosComponent } from './modules/cadastro-recados/cadastro-recados.co
 import { InboxComponent } from './modules/inbox/inbox.component';
 import { CadastroChamadoComponent } from './modules/cadastro-chamado/cadastro-chamado.component';
 import { ListaChamadosComponent } from './modules/lista-chamados/lista-chamados.component';
+import { DetalheChamadoComponent } from './modules/detalhe-chamado/detalhe-chamado.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'inbox', component: InboxComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'chamadoTI', component: CadastroChamadoComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
   { path: 'listaChamados', component: ListaChamadosComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
+  { path: 'detalhe-chamado/:id', component: DetalheChamadoComponent, canActivate: [AuthGuard], data: { requiresLogin: true, requiresAdmin: false }},
 
 ];
 

@@ -1,0 +1,74 @@
+.card-custom {
+  background-color: #eed1b5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  color: #171a4a;
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.card-text p {
+  margin: 0 0 10px 0;
+}
+
+hr {
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.anexo {
+  margin-bottom: 15px;
+}
+
+.anexo a {
+  display: block;
+  color: #171a4a;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.anexo a:hover {
+  text-decoration: underline;
+}
+
+.comentario {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-historico {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+button.btn-primary {
+  background-color: #171a4a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.btn-primary:hover {
+  background-color: #000020;
+}

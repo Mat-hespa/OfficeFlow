@@ -18,6 +18,13 @@
             <span *ngIf="newNotificationsCount > 0" class="notification-badge">{{ newNotificationsCount }}</span>
           </button>
         </li>
+
+        <li class="nav-item position-relative">
+          <button class="btn notification-button" (click)="openChamado()">
+            <i class="fa-solid fa-desktop"></i>
+          </button>
+        </li>
+
         <li class="nav-item position-relative">
           <button class="btn notification-button" (click)="openPerfil()">
             <i class="fa-solid fa-user"></i>

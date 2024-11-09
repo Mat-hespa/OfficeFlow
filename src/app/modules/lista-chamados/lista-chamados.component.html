@@ -1,135 +1,79 @@
 <app-header></app-header>
-
-<div class="container" style="padding-top: 80px;">
-  <!-- Mensagem de Nenhum Chamado -->
-  <div *ngIf="chamadosAbertos.length === 0 && chamadosEmProcesso.length === 0 && chamadosFinalizados.length === 0" class="text-center">
-    <p class="text-center" style="color: #171a4a;">Nenhum chamado encontrado.</p>
-  </div>
-
-  <!-- Chamados em Aberto -->
-  <div class="section" *ngIf="chamadosAbertos.length > 0">
-    <h3 class="section-title">
-      <i class="fas fa-folder-open"></i> Chamados em Aberto
-    </h3>
-    <div class="cards-container">
-      <div *ngFor="let chamado of chamadosAbertos" class="card aberto">
-        <div class="card-header">
-          <h3>{{ chamado.titulo }}</h3>
-          <span class="status">Status: {{ chamado.status }}</span>
-        </div>
-        <p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
-        <p><strong>Prioridade:</strong> {{ chamado.prioridade }}</p>
-
-        <!-- Dropdown de histórico de comentários -->
-        <div class="historico-dropdown">
-          <button (click)="toggleHistorico(chamado)">
-            Histórico de Comentários
-            <span [ngClass]="{'expanded': chamado.showHistorico}">&#9660;</span>
-          </button>
-
-          <div *ngIf="chamado.showHistorico" class="historico">
-            <div *ngFor="let historico of chamado.history" class="comentario">
-              <p><strong>{{ historico.updatedBy }}</strong> ({{ historico.updatedAt | date:'short' }}):</p>
-              <p>{{ historico.comment }}</p>
-              <span class="status-historico">Status: {{ historico.status }}</span>
+<div class="container d-flex justify-content-center align-items-center vh-100" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center w-100">
+    <div class="col-md-12">
+      <div class="card mt-5 h-auto w-100" style="background-color: #eed1b5; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Lista de Chamados</h3>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #171a4a; color: #ffffff;">
+                {{ selectedStatus || 'Filtrar por Status' }}
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="filterChamados('')">Todos</a></li>
+                <li><a class="dropdown-item" (click)="filterChamados('aberto')">Aberto</a></li>
+                <li><a class="dropdown-item" (click)="filterChamados('processo')">Em Processo</a></li>
+                <li><a class="dropdown-item" (click)="filterChamados('fechado')">Fechado</a></li>
+              </ul>
             </div>
           </div>
-        </div>
 
-        <button *ngIf="userRole === 'tecnico'" (click)="abrirModal(chamado)">Atualizar Chamado</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chamados em Processo -->
-  <div class="section" *ngIf="chamadosEmProcesso.length > 0">
-    <h3 class="section-title">
-      <i class="fas fa-spinner"></i> Chamados em Processo
-    </h3>
-    <div class="cards-container">
-      <div *ngFor="let chamado of chamadosEmProcesso" class="card processo">
-        <div class="card-header">
-          <h3>{{ chamado.titulo }}</h3>
-          <span class="status">Status: {{ chamado.status }}</span>
-        </div>
-        <p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
-        <p><strong>Prioridade:</strong> {{ chamado.prioridade }}</p>
-
-        <!-- Dropdown de histórico de comentários -->
-        <div class="historico-dropdown">
-          <button (click)="toggleHistorico(chamado)">
-            Histórico de Comentários
-            <span [ngClass]="{'expanded': chamado.showHistorico}">&#9660;</span>
-          </button>
-
-          <div *ngIf="chamado.showHistorico" class="historico">
-            <div *ngFor="let historico of chamado.history" class="comentario">
-              <p><strong>{{ historico.updatedBy }}</strong> ({{ historico.updatedAt | date:'short' }}):</p>
-              <p>{{ historico.comment }}</p>
-              <span class="status-historico">Status: {{ historico.status }}</span>
+          <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-        </div>
 
-        <button *ngIf="userRole === 'tecnico'" (click)="abrirModal(chamado)">Atualizar Chamado</button>
-      </div>
-    </div>
-  </div>
+          <div class="table-responsive" *ngIf="!loading">
+            <table id="example" class="table table-striped table-hover mt-3" style="background-color: #ffffff">
+              <thead class="table-dark">
+                <tr>
+                  <th style="background-color: #000020; color: #ffffff">Título</th>
+                  <th style="background-color: #000020; color: #ffffff">Status</th>
+                  <th style="background-color: #000020; color: #ffffff">Descrição</th>
+                  <th style="background-color: #000020; color: #ffffff">Prioridade</th>
+                  <th *ngIf="userRole === 'tecnico'" style="background-color: #000020; color: #ffffff">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let chamado of filteredChamados">
+                  <td><a [routerLink]="['/detalhe-chamado', chamado._id]">{{ chamado.titulo }}</a></td>
+                  <td>{{ chamado.status }}</td>
+                  <td>{{ chamado.descricao }}</td>
+                  <td>{{ chamado.prioridade }}</td>
+                  <td *ngIf="userRole === 'tecnico'">
+                    <button (click)="abrirModal(chamado)" class="btn btn-primary">Atualizar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-  <!-- Chamados Finalizados -->
-  <div class="section" *ngIf="chamadosFinalizados.length > 0">
-    <h3 class="section-title">
-      <i class="fas fa-check-circle"></i> Chamados Finalizados
-    </h3>
-    <div class="cards-container">
-      <div *ngFor="let chamado of chamadosFinalizados" class="card fechado">
-        <div class="card-header">
-          <h3>{{ chamado.titulo }}</h3>
-          <span class="status">Status: {{ chamado.status }}</span>
-        </div>
-        <p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
-        <p><strong>Prioridade:</strong> {{ chamado.prioridade }}</p>
+          <!-- Modal para atualização do chamado -->
+          <div *ngIf="selectedChamado" class="modal">
+            <div class="modal-content">
+              <h3>Atualizar Chamado: {{ selectedChamado.titulo }}</h3>
+              
+              <label for="status">Status:</label>
+              <select id="status" [(ngModel)]="selectedChamado.status">
+                <option value="aberto">Aberto</option>
+                <option value="processo">Em Processo</option>
+                <option value="fechado">Fechado</option>
+              </select>
 
-        <!-- Dropdown de histórico de comentários -->
-        <div class="historico-dropdown">
-          <button (click)="toggleHistorico(chamado)">
-            Histórico de Comentários
-            <span [ngClass]="{'expanded': chamado.showHistorico}">&#9660;</span>
-          </button>
+              <label for="comentario">Comentário:</label>
+              <textarea id="comentario" [(ngModel)]="novoComentario"></textarea>
 
-          <div *ngIf="chamado.showHistorico" class="historico">
-            <div *ngFor="let historico of chamado.history" class="comentario">
-              <p><strong>{{ historico.updatedBy }}</strong> ({{ historico.updatedAt | date:'short' }}):</p>
-              <p>{{ historico.comment }}</p>
-              <span class="status-historico">Status: {{ historico.status }}</span>
+              <div class="button-group">
+                <button (click)="atualizarChamado()">Salvar</button>
+                <button (click)="closeModal()">Cancelar</button>
+              </div>
             </div>
           </div>
+
         </div>
-
-        <button *ngIf="userRole === 'tecnico'" (click)="abrirModal(chamado)">Atualizar Chamado</button>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal para atualização do chamado -->
-<div *ngIf="selectedChamado" class="modal">
-  <div class="modal-content">
-    <h3>Atualizar Chamado: {{ selectedChamado.titulo }}</h3>
-    
-    <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="selectedChamado.status">
-      <option value="aberto">Aberto</option>
-      <option value="processo">Em Processo</option>
-      <option value="fechado">Fechado</option>
-    </select>
-
-    <label for="comentario">Comentário:</label>
-    <textarea id="comentario" [(ngModel)]="novoComentario"></textarea>
-
-    <div class="button-group">
-      <button (click)="atualizarChamado()">Salvar</button>
-      <button (click)="closeModal()">Cancelar</button>
     </div>
   </div>
 </div>

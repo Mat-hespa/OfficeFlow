@@ -1,0 +1,49 @@
+<app-header></app-header>
+<div class="container mt-4" style="color: #171a4a">
+  <div class="row justify-content-center align-items-center bg-mobile">
+    <div class="col-md-12 mt-3 mb-4">
+      <div class="card mt-5 h-auto card-custom">
+        <div class="card-body" *ngIf="chamado">
+          <h3 class="card-title">Detalhes do Chamado: {{ chamado?.titulo }}</h3>
+          <div class="card-text">
+            <p><strong>Status:</strong> {{ chamado?.status }}</p>
+            <p><strong>Descrição:</strong> {{ chamado?.descricao }}</p>
+            <p><strong>Prioridade:</strong> {{ chamado?.prioridade }}</p>
+          </div>
+          
+          <h4>Anexos</h4>
+          <div *ngFor="let anexo of chamado?.anexos" class="anexo">
+            <a [href]="anexo" target="_blank">{{ anexo }}</a>
+          </div>
+          
+          <h4>Histórico de Comentários</h4>
+          <div *ngFor="let historico of chamado?.history" class="comentario">
+            <p><strong>{{ historico.updatedBy }} </strong> <small>({{ historico.updatedAt | date:'short' }})</small>:</p>
+            <p>{{ historico.comment }}</p>
+            <span class="status-historico">Status: {{ historico.status }}</span>
+          </div>
+
+          <!-- <div *ngIf="userRole === 'tecnico'">
+            <label for="status">Status:</label>
+            <select id="status" [(ngModel)]="chamado.status">
+              <option value="aberto">Aberto</option>
+              <option value="processo">Em Processo</option>
+              <option value="fechado">Fechado</option>
+            </select>
+
+            <label for="comentario">Comentário:</label>
+            <textarea id="comentario" [(ngModel)]="novoComentario"></textarea>
+
+            <div class="button-group">
+              <button (click)="atualizarChamado()">Salvar</button>
+            </div>
+          </div> -->
+
+          <div class="button-group">
+            <button class="btn btn-primary" (click)="voltar()">Voltar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

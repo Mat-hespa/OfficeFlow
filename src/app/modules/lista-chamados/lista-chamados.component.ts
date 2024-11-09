@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-lista-chamados',
@@ -9,15 +11,15 @@ import { environment } from 'src/environments/environment';
 })
 export class ListaChamadosComponent implements OnInit {
   chamados: any[] = [];
-  chamadosAbertos: any[] = [];
-  chamadosEmProcesso: any[] = [];
-  chamadosFinalizados: any[] = [];
+  filteredChamados: any[] = [];
   selectedChamado: any = null;
   novoComentario: string = '';
   userRole: string | null;
   userEmail: string | null;
+  loading: boolean = false; // Estado de carregamento
+  selectedStatus: string = ''; // Status selecionado para o filtro
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router, private toast: NgToastService) {
     this.userRole = sessionStorage.getItem('userRole');
     this.userEmail = sessionStorage.getItem('userEmail');
   }
@@ -27,23 +29,30 @@ export class ListaChamadosComponent implements OnInit {
   }
 
   getChamados() {
+    this.loading = true;
     this.http.get(`${environment.apiUrl}/api/chamados`, {
       params: { userRole: this.userRole ?? '', userEmail: this.userEmail ?? '' }
     }).subscribe(
       (data: any) => {
         this.chamados = data;
-        this.filterChamados();
+        this.filteredChamados = data;
+        this.loading = false;
       },
       (error) => {
         console.error('Erro ao buscar chamados:', error);
+        this.loading = false;
+        this.toast.error({ detail: 'ERROR', summary: 'Erro ao buscar chamados.' });
       }
     );
   }
 
-  filterChamados() {
-    this.chamadosAbertos = this.chamados.filter(chamado => chamado.status === 'aberto');
-    this.chamadosEmProcesso = this.chamados.filter(chamado => chamado.status === 'processo');
-    this.chamadosFinalizados = this.chamados.filter(chamado => chamado.status === 'fechado');
+  filterChamados(status: string) {
+    this.selectedStatus = status;
+    if (status) {
+      this.filteredChamados = this.chamados.filter(chamado => chamado.status === status);
+    } else {
+      this.filteredChamados = this.chamados;
+    }
   }
 
   abrirModal(chamado: any) {
@@ -54,10 +63,6 @@ export class ListaChamadosComponent implements OnInit {
   closeModal() {
     this.selectedChamado = null;
     this.novoComentario = '';
-  }
-
-  toggleHistorico(chamado: any): void {
-    chamado.showHistorico = !chamado.showHistorico;
   }
 
   getEmailUsuarioLogado(): string {
@@ -85,11 +90,13 @@ export class ListaChamadosComponent implements OnInit {
       }).subscribe(
         (response) => {
           console.log('Chamado atualizado com sucesso', response);
+          this.toast.success({ detail: 'SUCCESS', summary: 'Chamado atualizado com sucesso.' });
           this.closeModal();
           this.getChamados(); // Atualiza a lista de chamados após a mudança
         },
         (error) => {
           console.error('Erro ao atualizar o chamado:', error);
+          this.toast.error({ detail: 'ERROR', summary: 'Erro ao atualizar o chamado.' });
         }
       );
     }

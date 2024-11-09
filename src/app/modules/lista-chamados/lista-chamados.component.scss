@@ -1,135 +1,22 @@
-.container {
-  background-color: #171a4a;
-  padding: 20px;
-  color: #eed1b5;
-}
-
-.page-title {
-  color: rgba(255, 255, 255, 0.611);
-  margin-bottom: 20px;
-}
-
-.section {
-  margin-bottom: 40px;
-}
-
-.section-title {
-  color: #eed1b5;
-  margin-top: 40px;
-  font-size: 1.5em;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Alinha os títulos à esquerda */
-  padding-bottom: 20px;
-}
-
-.section-title i {
-  margin-right: 10px;
-}
-
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px; /* Aumenta o espaçamento entre os cards */
-  justify-content: center; /* Centraliza os cards */
-}
-
 .card {
   background-color: #eed1b5;
-  border: 1px solid #171a4a;
-  padding: 15px;
-  border-radius: 5px;
-  width: calc(33% - 20px);
-  box-sizing: border-box;
-  transition: background-color 0.3s ease, border 0.3s ease;
-  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 1200px) {
-  .card {
-      width: calc(50% - 20px);
-  }
-}
-
-@media (max-width: 768px) {
-  .card {
-      width: 100%;
-  }
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card h3 {
+.card-body {
   color: #171a4a;
+  padding: 20px;
 }
 
-.card.aberto {
-  border-left: 5px solid #ffcccb;
+.table-responsive {
+  margin-top: 20px;
 }
 
-.card.processo {
-  background-color: #d1e3ee;
-  border-left: 5px solid #f0ad4e;
-}
-
-.card.fechado {
-  background-color: #cceedd;
-  border-left: 5px solid #5cb85c;
-}
-
-.historico-dropdown button {
-  background-color: #171a4a;
-  color: #eed1b5;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.historico-dropdown button:hover {
-  background-color: rgba(23, 26, 74, 0.8);
-}
-
-.historico {
-  margin-top: 10px;
-  background-color: rgba(23, 26, 74, 0.2);
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.comentario {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.611); /* Cor ajustada */
-  border-radius: 5px;
-}
-
-.status-historico {
-  display: block;
-  font-style: italic;
-  color: #171a4a;
-}
-
-button {
-  margin-top: 10px;
-  background-color: #171a4a;
-  color: #eed1b5;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: rgba(23, 26, 74, 0.8);
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
 }
 
 .modal {
@@ -198,6 +85,7 @@ button:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .modal-content textarea {
   height: 100px;
   resize: vertical;

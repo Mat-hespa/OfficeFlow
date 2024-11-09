@@ -32,6 +32,7 @@ import { InboxComponent } from './modules/inbox/inbox.component';
 import { HistoryComponent } from './modules/history/history.component';
 import { CadastroChamadoComponent } from './modules/cadastro-chamado/cadastro-chamado.component';
 import { ListaChamadosComponent } from './modules/lista-chamados/lista-chamados.component';
+import { DetalheChamadoComponent } from './modules/detalhe-chamado/detalhe-chamado.component';
 
 
 
@@ -57,6 +58,7 @@ import { ListaChamadosComponent } from './modules/lista-chamados/lista-chamados.
     HistoryComponent,
     CadastroChamadoComponent,
     ListaChamadosComponent,
+    DetalheChamadoComponent,
   ],
   imports: [
     BrowserModule,
