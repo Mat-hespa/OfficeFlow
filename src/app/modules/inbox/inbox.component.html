@@ -52,12 +52,12 @@
             <div class="recados-container" *ngIf="recados.length > 0">
               <h6 class="mt-3">Recados</h6>
               <div *ngFor="let recado of recados">
-                <div class="card mt-3" [ngClass]="{'bg-warning': !recado.read, 'bg-light': recado.read}">
+                <div class="card mt-3">
                   <div class="card-body">
                     <p style="color: #171a4a"><strong>De:</strong> {{ recado.emailRemetente }}</p>
                     <p style="color: #171a4a"><strong>Mensagem:</strong> {{ recado.mensagem }}</p>
                     <p style="color: #171a4a"><strong>Para:</strong> {{ recado.emailDestinatario }}</p>
-                    <div class="button-group mt-2">
+                    <div class="button-group mt-2" *ngIf="recado.status !== 'finalizado'">
                       <div class="btn-group" role="group" style="padding-right: 10px;">
                         <button type="button" class="btn btn-primary dropdown-toggle" style="background-color: #171a4a; border: 0;" data-bs-toggle="dropdown" aria-expanded="false">
                           Atualizar status
@@ -69,9 +69,10 @@
                           <button class="btn btn-danger" style="margin-left: 10px;" (click)="updateRecadoStatus(recado._id, 'finalizado')">Finalizar</button> -->
                         </ul>
                       </div>
-                      <button *ngIf="!recado.read" class="btn btn-primary" (click)="markRecadoAsRead(recado._id)" style="background-color: #171a4a; border: 0;" >Marcar como lido</button>
+                      <button *ngIf="shouldShowMarkAsReadButton(recado)" class="btn btn-primary" (click)="markRecadoAsRead(recado._id)" style="border: 0;" >Marcar como lido</button>
                     </div>
                   </div>
+                  <app-history [history]="recado.history"></app-history>
                 </div>
               </div>
             </div>

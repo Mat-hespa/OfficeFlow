@@ -20,6 +20,8 @@ interface ApiResponse {
 export class RecadosComponent implements OnInit {
   recadoForm: FormGroup;
   emails: string[] = [];
+  setores: any[] = [];
+  pessoasNames: any[] = [];
   loading: boolean = false;
 
   constructor(
@@ -31,24 +33,42 @@ export class RecadosComponent implements OnInit {
   ) {
     this.recadoForm = this.formBuilder.group({
       emailRemetente: [{ value: sessionStorage.getItem('userEmail'), disabled: true }, Validators.required],
+      setor: ['', Validators.required],
       emailDestinatario: ['', Validators.required],
       mensagem: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.loadNomePessoas();
+    this.getSetores();
   }
 
-  loadNomePessoas(): void {
+  getSetores(): void {
     this.loading = true;
-    this.apiServiceService.loadNomePessoas().subscribe(
-      (pessoasNames: { email: string }[]) => {
-        this.emails = pessoasNames.map(pessoa => pessoa.email);
+    this.http.get(`${environment.apiUrl}/setores`).subscribe(
+      (response: any) => {
+        this.setores = response.setores;
         this.loading = false;
       },
       error => {
         this.loading = false;
+        console.error('Error loading sectors:', error);
+      }
+    );
+  }
+
+  onSetorChange(event: any): void {
+    const setorNome = event.target.value;
+    this.loading = true;
+    this.http.get(`${environment.apiUrl}/pessoa/api/${setorNome}`).subscribe(
+      (response: any) => {
+        this.pessoasNames = response.pessoas;
+        this.emails = this.pessoasNames.map(pessoa => pessoa.email);
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        console.error('Error loading people:', error);
       }
     );
   }
@@ -61,13 +81,17 @@ export class RecadosComponent implements OnInit {
         mensagem: this.recadoForm.get('mensagem')?.value
       };
 
+      this.loading = true;
       this.http.post(`${environment.apiUrl}/recados`, recado).subscribe(
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Recado enviado com sucesso!' });
           this.router.navigateByUrl('/home');
+          this.loading = false;
         },
         (error) => {
+          console.error('Error sending recado:', error);
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao enviar recado.' });
+          this.loading = false;
         }
       );
     } else {

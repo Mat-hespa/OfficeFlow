@@ -11,5 +11,6 @@ export class HistoryComponent {
 
   toggleHistory() {
     this.isOpen = !this.isOpen; // Alterna a visibilidade
+    console.log(this.history)
   }
 }

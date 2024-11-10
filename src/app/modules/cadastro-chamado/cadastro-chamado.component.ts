@@ -21,6 +21,7 @@ export class CadastroChamadoComponent implements OnInit {
     'Erro de Impressora': 'Baixa',
     'Problema de Rede': 'Alta'
   };
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +46,7 @@ export class CadastroChamadoComponent implements OnInit {
 
   registerChamado() {
     if (this.chamadoForm.valid) {
+      this.loading = true; // Set loading to true
       const formData = new FormData();
 
       const titulo = this.chamadoForm.get('titulo')?.value;
@@ -65,9 +67,12 @@ export class CadastroChamadoComponent implements OnInit {
           console.log('Chamado criado com sucesso', response);
           this.toast.success({ detail: 'SUCCESS', summary: 'Chamado de TI cadastrado com sucesso.' });
           this.router.navigateByUrl('/home');
+          this.loading = false; // Set loading to false
         },
         error => {
           console.error('Erro ao criar o chamado:', error);
+          this.toast.error({ detail: 'ERROR', summary: 'Erro ao criar o chamado.' });
+          this.loading = false; // Set loading to false
         }
       );
     } else {

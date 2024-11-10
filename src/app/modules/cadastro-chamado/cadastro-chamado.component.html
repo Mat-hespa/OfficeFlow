@@ -61,8 +61,10 @@
 
             <!-- Botão de Enviar -->
             <div class="col-12 mt-4">
-              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">
-                Cadastrar Chamado
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span *ngIf="!loading">Cadastrar Chamado</span>
+                <span *ngIf="loading">Cadastrando</span>
               </button>
             </div>
           </form>

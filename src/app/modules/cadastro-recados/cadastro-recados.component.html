@@ -17,8 +17,20 @@
               </div>
             </div>
 
-            <!-- Campo Destinatário -->
+            <!-- Campo Setor -->
             <div class="col-md-6">
+              <label for="setor" class="form-label" style="color: #171a4a">Setor</label>
+              <select formControlName="setor" class="form-control border border-2" id="setor" (change)="onSetorChange($event)" style="background-color: rgba(255, 255, 255, 0.611)">
+                <option value="" disabled selected>Selecione um setor</option>
+                <option *ngFor="let setor of setores" [value]="setor.nomeSetor">{{ setor.nomeSetor }}</option>
+              </select>
+              <div *ngIf="recadoForm.get('setor')?.invalid && recadoForm.get('setor')?.touched" class="text-danger">
+                Este campo é obrigatório.
+              </div>
+            </div>
+
+            <!-- Campo Destinatário -->
+            <div class="col-md-12">
               <label for="emailDestinatario" class="form-label" style="color: #171a4a">Destinatário</label>
               <select formControlName="emailDestinatario" class="form-control border border-2" id="emailDestinatario" style="background-color: rgba(255, 255, 255, 0.611)">
                 <option value="" disabled selected>Selecione um destinatário</option>
@@ -40,7 +52,11 @@
 
             <!-- Botão de Envio -->
             <div class="col-12 mt-4">
-              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff">Enviar Recado</button>
+              <button type="submit" class="btn btn-primary" style="background-color: #171a4a; border: 0; color: #ffffff" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span *ngIf="!loading">Enviar Recado</span>
+                <span *ngIf="loading">Enviando...</span>
+              </button>
             </div>
           </form>
         </div>

@@ -129,18 +129,23 @@ export class InboxComponent implements OnInit {
     const readByUser = document.readBy.find((entry: any) => entry.recipient === userEmail);
     
     return readByUser ? !readByUser.read : false;
-  }  
+  } 
 
   markRecadoAsRead(recadoId: string) {
-    this.http.patch(`${environment.apiUrl}/recados/${recadoId}/read`, {}).subscribe(
-      (response: any) => {
-        this.toast.success({ detail: 'SUCCESS', summary: 'Recado marcado como lido.' });
-        this.loadRecados();
-      },
-      (error) => {
-        this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar recado como lido.' });
-      }
-    );
+    const recipientEmail = sessionStorage.getItem('userEmail');
+    if (recipientEmail) {
+      this.http.patch(`${environment.apiUrl}/recados/${recadoId}/read`, { recipientEmail }).subscribe(
+        (response: any) => {
+          this.toast.success({ detail: 'SUCCESS', summary: 'Recado marcado como lido.' });
+          this.loadRecados();
+        },
+        (error) => {
+          this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar recado como lido.' });
+        }
+      );
+    } else {
+      this.toast.error({ detail: 'ERROR', summary: 'Email do destinatário não encontrado.' });
+    }
   }
 
   openForwardModal(item: any, type: string) {
@@ -166,7 +171,8 @@ export class InboxComponent implements OnInit {
         }
       );
     } else if (this.selectedType === 'recado') {
-      this.http.post(`${environment.apiUrl}/recados/forward`, { recadoId: this.selectedDocument._id, newRegistrant: newRegistrantEmail, newRecipient: recipientEmail }).subscribe(
+      console.log(comment)
+      this.http.post(`${environment.apiUrl}/recados/forward`, { recadoId: this.selectedDocument._id, newRegistrant: newRegistrantEmail, newRecipient: recipientEmail, comment: comment }).subscribe(
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Recado encaminhado com sucesso.' });
           console.log(recipientEmail);

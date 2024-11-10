@@ -81,6 +81,8 @@ export class CadastroDocumentoComponent implements OnInit {
     if (this.documentForm.valid && this.selectedFile) {
       console.log('Entrando no envio do formulário');
 
+      this.loading = true; // Set loading to true
+
       const formData = new FormData();
       formData.append('registrant', this.documentForm.get('registrant')?.value);
       formData.append('recipient', this.documentForm.get('recipient')?.value);
@@ -91,9 +93,11 @@ export class CadastroDocumentoComponent implements OnInit {
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Documento cadastrado com sucesso!' });
           this.router.navigateByUrl('/home');
+          this.loading = false; // Set loading to false
         },
         (error) => {
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao cadastrar documento.' });
+          this.loading = false; // Set loading to false
         }
       );
     } else {
