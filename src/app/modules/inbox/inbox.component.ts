@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-inbox',
@@ -24,14 +25,14 @@ export class InboxComponent implements OnInit {
   setores: any[] = [];
   selectedSetor: string = '';
 
-
   @ViewChild('forwardModal') forwardModal: TemplateRef<any> | undefined;
 
   constructor(
     private http: HttpClient, 
     private toast: NgToastService, 
     private modalService: NgbModal,
-    private apiServiceService: ApiServiceService
+    private apiServiceService: ApiServiceService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -112,6 +113,7 @@ export class InboxComponent implements OnInit {
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Documento marcado como lido.' });
           this.loadDocuments();
+          this.updateUnreadCount();
         },
         (error) => {
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar documento como lido.' });
@@ -138,6 +140,7 @@ export class InboxComponent implements OnInit {
         (response: any) => {
           this.toast.success({ detail: 'SUCCESS', summary: 'Recado marcado como lido.' });
           this.loadRecados();
+          this.updateUnreadCount();
         },
         (error) => {
           this.toast.error({ detail: 'ERROR', summary: 'Erro ao marcar recado como lido.' });
@@ -224,4 +227,29 @@ export class InboxComponent implements OnInit {
     );
   }
 
+  private updateUnreadCount(): void {
+    const recipientEmail = sessionStorage.getItem('userEmail');
+    if (recipientEmail) {
+      let tempNotificationsCount = 0;
+
+      this.http.get(`${environment.apiUrl}/recados/${recipientEmail}/unread-count`).subscribe(
+        (response: any) => {
+          tempNotificationsCount += response.unreadCount;
+
+          this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}/unread`).subscribe(
+            (response: any) => {
+              tempNotificationsCount += response.unreadCount;
+              this.notificationService.updateUnreadCount(tempNotificationsCount);
+            },
+            (error) => {
+              console.error('Erro ao verificar novos documentos:', error);
+            }
+          );
+        },
+        (error) => {
+          console.error('Erro ao verificar novos recados:', error);
+        }
+      );
+    }
+  }
 }

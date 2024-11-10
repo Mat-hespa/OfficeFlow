@@ -4,6 +4,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   newNotificationsCount: number = 0;
   private checkNotificationsSubscription: Subscription | undefined;
 
-  constructor(public authService: AuthService, private router: Router, private http: HttpClient) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.checkForNewNotifications();
     this.checkNotificationsSubscription = interval(60000).subscribe(() => this.checkForNewNotifications()); // Verifica a cada minuto
+
+    // Subscribe to the notification service to get updates
+    this.notificationService.unreadCount$.subscribe(count => {
+      this.newNotificationsCount = count;
+    });
   }
 
   ngOnDestroy(): void {
@@ -42,9 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.http.get(`${environment.apiUrl}/documentos/${recipientEmail}/unread`).subscribe(
             (response: any) => {
               tempNotificationsCount += response.unreadCount;
-              this.newNotificationsCount = tempNotificationsCount; // Atualize o contador de notificações
-              console.log(recipientEmail)
-              console.log('Novos documentos nao lidos:', this.newNotificationsCount);
+              this.notificationService.updateUnreadCount(tempNotificationsCount); // Update the notification service
             },
             (error) => {
               console.error('Erro ao verificar novos documentos:', error);
@@ -52,7 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           );
         },
         (error) => {
-          console.error('Erro ao verificar novos recados.', error);
+          console.error('Erro ao verificar novos recados:', error);
         }
       );
     }
