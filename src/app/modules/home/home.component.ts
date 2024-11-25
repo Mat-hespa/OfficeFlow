@@ -36,7 +36,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.initializeLazyLoading();
+    setTimeout(() => {
+      this.initializeLazyLoading();
+    }, 100); // Pequeno atraso para garantir que as imagens estejam na DOM
   }
 
   getCargoUsuario(user: any): void {
@@ -58,19 +60,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   initializeLazyLoading(): void {
     const lazyImages = document.querySelectorAll('img.lazyload');
 
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target as HTMLImageElement;
-          img.src = img.dataset['src'] ?? '';
-          img.classList.remove('lazyload');
-          imageObserver.unobserve(img);
-        }
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            img.src = img.dataset['src'] ?? '';
+            img.classList.remove('lazyload');
+            imageObserver.unobserve(img);
+          }
+        });
       });
-    });
 
-    lazyImages.forEach(img => {
-      imageObserver.observe(img);
-    });
+      lazyImages.forEach(img => {
+        imageObserver.observe(img);
+      });
+    } else {
+      // Fallback for browsers that do not support IntersectionObserver
+      lazyImages.forEach(img => {
+        const imageElement = img as HTMLImageElement;
+        imageElement.src = imageElement.dataset['src'] ?? '';
+        imageElement.classList.remove('lazyload');
+      });
+    }
   }
 }

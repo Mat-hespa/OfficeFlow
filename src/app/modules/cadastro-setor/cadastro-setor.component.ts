@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { EmpresaModel } from 'src/app/shared/models/empresaModel';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +11,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './cadastro-setor.component.html',
   styleUrls: ['./cadastro-setor.component.scss'],
 })
-export class CadastroSetorComponent {
+export class CadastroSetorComponent implements OnInit {
   setorForm: FormGroup;
   errorMessage: string = '';
   empresas: any[] = [];
@@ -26,7 +25,7 @@ export class CadastroSetorComponent {
     private apiServiceService: ApiServiceService
   ) {
     this.setorForm = this.formBuilder.group({
-      empresa: [, Validators.required],
+      empresa: [''],  // Inicialize com um valor vazio ou valor padrão
       nomeSetor: ['', Validators.required],
       isSubSetor: [''],
       setorPai: [''],
@@ -46,6 +45,10 @@ export class CadastroSetorComponent {
           console.log('Empresas recuperadas com sucesso:', response.companies);
           this.empresas = response.companies;
           console.log('Empresas no cadastro:', this.empresas);
+          // Supondo que sempre haja uma empresa e você quer definir a primeira empresa como valor inicial
+          if (this.empresas.length > 0) {
+            this.setorForm.patchValue({ empresa: this.empresas[0].nomeFantasia });
+          }
         } else {
           console.error('Erro ao recuperar empresas:', response.message);
         }
@@ -59,7 +62,7 @@ export class CadastroSetorComponent {
   registerSetor() {
     if (this.setorForm.valid) {
       const setorData = this.setorForm.value;
-      console.log(setorData)
+      console.log(setorData);
       this.http
         .post(`${environment.apiUrl}/setor/create`, setorData)
         .subscribe((resultData: any) => {
@@ -77,7 +80,7 @@ export class CadastroSetorComponent {
           }
         });
     } else {
-      console.log(this.setorForm)
+      console.log(this.setorForm);
       this.toast.warning({
         detail: 'WARNING',
         summary: 'Preencha todos os campos',

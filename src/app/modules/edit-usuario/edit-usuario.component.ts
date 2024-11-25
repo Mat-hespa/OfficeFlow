@@ -73,7 +73,7 @@ export class EditUsuarioComponent implements OnInit {
       tipoTelefone: [''],
       numeroTelefone: [''],
       descricaoTelefone: [''],
-      email: [{value: sessionStorage.getItem('userEmail'), disabled: true}, Validators.required],
+      email: [''],
       descricaoEmail: [''],
       cep: [''],
       cidade: [''],
@@ -138,11 +138,10 @@ export class EditUsuarioComponent implements OnInit {
 
   registerPessoa() {
     if (this.pessoaForm.valid) {
-      const email = sessionStorage.getItem('userEmail');
       const pessoaData = this.pessoaForm.value; 
-      delete pessoaData.email;
+      console.log('ENVIO NO EDICAO DE PESSOA', pessoaData.email)
       this.http
-        .put(`${environment.apiUrl}/pessoa/${email}/update`, pessoaData) // Requisição PUT com o email na URL
+        .put(`${environment.apiUrl}/pessoa/${pessoaData.email}/update`, pessoaData) // Requisição PUT com o email na URL
         .subscribe((resultData: any) => {
           if (resultData.status) {
             this.toast.success({ detail: 'SUCCESS', summary: 'Pessoa editada com sucesso' });

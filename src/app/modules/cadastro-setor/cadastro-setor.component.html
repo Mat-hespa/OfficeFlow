@@ -16,27 +16,14 @@
             <h5 class="mb-0 mt-4" style="font-weight: bold">DADOS DO SETOR</h5>
             <div class="col-md-6">
               <label for="empresa" class="form-label">Empresa</label>
-              
-              <!-- <select
+              <input
+                type="text"
                 formControlName="empresa"
-                class="form-select"
+                class="form-control"
                 id="empresa"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
-              >
-                <option
-                  *ngFor="let empresa of empresas"
-                  [value]="empresa.nomeFantasia"
-                >
-                  {{ empresa.nomeFantasia }}
-                </option>
-              </select> -->
-
-              <input style="background-color: rgba(255, 255, 255, 0.611);" type="text" class="form-control" id="empresa" *ngFor="let empresa of empresas"
-              [value]="empresa.nomeFantasia" readonly>
-
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
+                readonly
+              />
               <div
                 *ngIf="
                   setorForm.get('empresa')?.invalid &&
@@ -54,10 +41,7 @@
                 formControlName="nomeSetor"
                 class="form-control border border-2"
                 id="nomeSetor"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
               />
               <div
                 *ngIf="
@@ -69,29 +53,6 @@
                 Nome do Setor é obrigatório
               </div>
             </div>
-            <!-- <div class="col-4">
-              <label for="descricao" class="form-label">Descrição</label>
-              <input
-                type="text"
-                formControlName="descricao"
-                class="form-control border border-2"
-                id="descricao"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
-              />
-              <div
-                *ngIf="
-                  setorForm.get('descricao')?.invalid &&
-                  setorForm.get('descricao')?.touched
-                "
-                class="text-danger"
-              >
-                Descrição é obrigatória
-              </div>
-            </div> -->
-
             <div class="col-4">
               <label for="isSubSetor" class="form-label">É subsetor?</label>
               <select
@@ -129,10 +90,7 @@
                 formControlName="responsavel"
                 class="form-control border border-2"
                 id="responsavel"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
               />
             </div>
             <div class="col-md-4">
@@ -142,10 +100,7 @@
                 formControlName="contato"
                 class="form-control border border-2"
                 id="contato"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
               />
             </div>
             <div class="col-4">
@@ -155,17 +110,12 @@
                 formControlName="status"
                 class="form-control border border-2"
                 id="status"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
               />
             </div>
 
             <!-- TELEFONE RESPONSÁVEL -->
-            <h5 class="mb-0 mt-5" style="font-weight: bold">
-              TELEFONE RESPONSÁVEL
-            </h5>
+            <h5 class="mb-0 mt-5" style="font-weight: bold">TELEFONE RESPONSÁVEL</h5>
             <div class="col-4">
               <label for="tipoTelefoneResponsavel" class="form-label">Tipo</label>
               <select
@@ -180,19 +130,13 @@
             </div>
 
             <div class="col-4">
-              <label for="numeroTelefoneResponsavel" class="form-label"
-                >Número Telefone</label
-              >
+              <label for="numeroTelefoneResponsavel" class="form-label">Número Telefone</label>
               <input
                 type="text"
                 formControlName="numeroTelefoneResponsavel"
                 class="form-control border border-2"
                 id="numeroTelefoneResponsavel"
-                style="
-                  background-color: rgba(255, 255, 255, 0.611);
-                  color: #171a4a;
-                "
-                numericOnly
+                style="background-color: rgba(255, 255, 255, 0.611); color: #171a4a;"
               />
               <div
                 *ngIf="
@@ -206,9 +150,7 @@
             </div>
 
             <div class="col-4">
-              <label for="descricaoTelefoneResponsavel" class="form-label"
-                >Descrição</label
-              >
+              <label for="descricaoTelefoneResponsavel" class="form-label">Descrição</label>
               <select
                 formControlName="descricaoTelefoneResponsavel"
                 class="form-select border border-2"

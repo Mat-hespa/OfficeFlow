@@ -59,7 +59,6 @@ export class RecadosComponent implements OnInit {
 
   onSetorChange(event: any): void {
     const setorNome = event.target.value;
-    this.loading = true;
     this.http.get(`${environment.apiUrl}/pessoa/api/${setorNome}`).subscribe(
       (response: any) => {
         this.pessoasNames = response.pessoas;
